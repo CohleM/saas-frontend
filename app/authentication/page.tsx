@@ -15,7 +15,8 @@ import { Label } from "@/components/ui/label"
 
 export default function DemoCreateAccount() {
   return (
-    <Card>
+    <div className="flex justify-center items-center mt-24">
+    <Card className="">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Create an account</CardTitle>
         <CardDescription>
@@ -56,5 +57,6 @@ export default function DemoCreateAccount() {
         <Button className="w-full">Create account</Button>
       </CardFooter>
     </Card>
+    </div>
   )
 }
