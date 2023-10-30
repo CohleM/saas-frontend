@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import NavBar from './Navbar'
+import Head from 'next/head';
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -15,7 +17,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+
     <html lang="en">
+      <head>
+      <script src="https://accounts.google.com/gsi/client" async></script> 
+      </head>
       <body className={inter.className}>
 		  <NavBar />
 

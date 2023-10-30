@@ -1,5 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
+import Link from 'next/link';
 
 // import React from 'react';
 
@@ -192,7 +193,7 @@ export default function Example() {
           {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
           </a> */}
-          <Button variant="default">Log in</Button>
+          <Link href="/signup" > <Button variant="default" size="sm" >Get Started</Button></Link>
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
