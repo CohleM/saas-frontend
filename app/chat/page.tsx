@@ -2,7 +2,7 @@
 
 import React from "react";
 import Textarea from "react-textarea-autosize";
-import { User2, Bot } from "lucide-react";
+import { User2, Bot, SendHorizontal } from "lucide-react";
 const chat = () => {
   let messages = [
     { id: 1, role: "user", content: "Hey how are you" },
@@ -15,10 +15,12 @@ const chat = () => {
   ];
 
   return (
-    <div className="">
-      <div className="flex justify-start h-[calc(100vh-theme(space.20))]  space-x-16 mx-auto bg-gray-50">
-        <div className="bg-slate-600 w-[20%]">div1</div>
-        <div className=" w-[80%] border-l-2">
+    <div className="bg-gray-50">
+      <div className="bg-slate-600 w-[20%] fixed top-20  bottom-0 left-0 h-[calc(100vh-theme(space.20))]">
+        div1
+      </div>
+      <div className="flex justify-center space-x-16 lg:mx-44 md:mx-36">
+        <div className=" w-full border-l-2  ">
           <div className=" lg:mr-32 lg:ml-32">
             <div>
               {messages.length !== 0 ? (
@@ -42,7 +44,7 @@ const chat = () => {
                             <Bot className="h-4 w-4 text-slate-200" />
                           </div>
 
-                          <p className="p-3 w-full  text-sm text-slate-600  leading-5 ">
+                          <p className="p-3 w-full  text-sm text-slate-600  leading-loose ">
                             {message.content}
                           </p>
                           <hr />
@@ -57,8 +59,12 @@ const chat = () => {
                 </div>
               )}
             </div>
-            {/* <div className=' bottom-0 left-0 right-0 w-[100%]'> 
+          </div>
+        </div>
+      </div>
 
+      <form className="fixed bottom-2  left-1/2 transform -translate-x-1/2 w-1/2 ">
+        <div className="flex items-center ">
           <Textarea
             tabIndex={0}
             required
@@ -66,12 +72,14 @@ const chat = () => {
             autoFocus
             placeholder="Send message..."
             spellCheck={false}
-            className="w-full focus:outline-none shadow-teal-700 shadow-xl placeholder:text-gray-200 text-sm text-white p-5 pr-16 rounded-xl bg-gray-200"
+            className="w-full focus:outline-none shadow-slate-400 border-2 shadow-2xl placeholder:text-gray-400 text-sm text-white p-5 pr-16 rounded-xl bg-gray-50"
           />
-        </div> */}
-          </div>
+          <button className="flex absolute bg-teal-500 p-2 rounded-lg right-0 mr-5 h-10 w-10">
+            {" "}
+            <SendHorizontal className="h-4 w-4" />{" "}
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
