@@ -78,7 +78,7 @@ export default function IndexPage() {
       <div className="flex min-h-full space-x-2">
         <Tree
           data={data}
-          className="flex-shrink-0 w-[200px] h-[460px] border-[1px]"
+          className="flex-shrink-0 w-[300px] h-[560px] border-[1px]"
           initialSlelectedItemId="f12"
           onSelectChange={(item) => setContent(item?.name ?? "")}
           folderIcon={Folder}
