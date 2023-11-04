@@ -2,7 +2,8 @@
 
 import React from "react";
 import Textarea from "react-textarea-autosize";
-import { User2, Bot, SendHorizontal } from "lucide-react";
+import { Plus, MessageSquare, User2, Bot, SendHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 const chat = () => {
   let messages = [
     { id: 1, role: "user", content: "Hey how are you" },
@@ -14,11 +15,86 @@ const chat = () => {
     },
   ];
 
+  let chatTitles = [
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 5, title: "HuggingFace is opensource" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+  ];
+
   return (
     <div className="bg-gray-50">
-      <div className="bg-slate-600 w-[20%] fixed top-20  bottom-0 left-0 h-[calc(100vh-theme(space.20))]">
-        div1
+      {/* <div className="flex flex-col space-y-4  bg-slate-100 w-[20%] fixed top-20  bottom-0 left-0 h-[calc(100vh-theme(space.20))] overflow-y-auto ">
+        <h4 className="h-10 flex items-center mx-4 text-md text-slate-600 font-medium mt-4">
+          {" "}
+          Chat history
+        </h4>
+
+        <Button className="mx-4 space-x-4 " variant="outline">
+          <Plus className="mx-2 w-4 h-4" />
+          New Chat
+        </Button>
+        {chatTitles.map((eachTitle) => (
+          <Button
+            key={eachTitle.id}
+            className=" mx-4 text-slate-600 text-left flex justify-start text-sm"
+            size="sm"
+            variant="ghost"
+          >
+            {" "}
+            <MessageSquare className="mx-2 w-4 h-4" />
+            {eachTitle.title}
+          </Button>
+        ))}
+      </div> */}
+
+      <div className=" bg-slate-100 w-[20%] fixed top-20 bottom-0 left-0 ">
+        <div className="h-[calc(100vh-theme(space.20))] overflow-y-auto  flex flex-col space-y-6 pb-6">
+          <h4 className="h-10 flex items-center mx-4 text-md text-slate-600 font-medium mt-4">
+            Chat history
+          </h4>
+
+          <Button className="mx-4 space-x-4 " variant="outline">
+            <Plus className="mx-2 w-4 h-4" />
+            New Chat
+          </Button>
+
+          {chatTitles.map((eachTitle) => (
+            <Button
+              key={eachTitle.id}
+              className="mx-4 text-slate-600 text-left flex justify-start text-sm"
+              size="sm"
+              variant="ghost"
+            >
+              <MessageSquare className="mx-2 w-4 h-4" />
+              {eachTitle.title}
+            </Button>
+          ))}
+        </div>
       </div>
+
       <div className="flex justify-center space-x-16 lg:mx-44 md:mx-36">
         <div className=" w-full border-l-2  ">
           <div className=" lg:mr-32 lg:ml-32">
@@ -36,7 +112,6 @@ const chat = () => {
                           <p className="p-3 w-full  text-sm text-slate-600">
                             {message.content}
                           </p>
-                          <hr className="h-2 bg-slate-700 text-slate-800" />
                         </div>
                       ) : (
                         <div className="flex gap-x-4">
@@ -47,7 +122,6 @@ const chat = () => {
                           <p className="p-3 w-full  text-sm text-slate-600  leading-loose ">
                             {message.content}
                           </p>
-                          <hr />
                         </div>
                       )}
                     </div>
@@ -74,9 +148,9 @@ const chat = () => {
             spellCheck={false}
             className="w-full focus:outline-none shadow-slate-400 border-2 shadow-2xl placeholder:text-gray-400 text-sm text-white p-5 pr-16 rounded-xl bg-gray-50"
           />
-          <button className="flex absolute bg-teal-500 p-2 rounded-lg right-0 mr-5 h-10 w-10">
+          <button className="flex justify-center items-center bg-slate-900 absolute  p-2 rounded-lg right-0 mr-5 h-10 w-10">
             {" "}
-            <SendHorizontal className="h-4 w-4" />{" "}
+            <SendHorizontal className="h-4 w-4 text-slate-200" />{" "}
           </button>
         </div>
       </form>
