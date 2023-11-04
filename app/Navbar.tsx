@@ -1,6 +1,6 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import Link from 'next/link';
+"use client";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // import React from 'react';
 
@@ -34,7 +34,7 @@ import Link from 'next/link';
 //   //       </ul>
 //   //     </nav>
 //   //   </div>
-  
+
 //   //   <main>
 //   //     <div classNameName='flex justify-end space-x-8'>
 //   //       <a href="#">Log in</a>
@@ -42,7 +42,6 @@ import Link from 'next/link';
 //   //     </div>
 //   //  </main>
 //   // </div>
-
 
 // /* <nav className="bg-white border-gray-200 dark:bg-gray-900">
 //   <div className="max-w-screen-xl flex flex-wrap  justify-between mx-auto p-4">
@@ -100,17 +99,17 @@ import Link from 'next/link';
 //         <div>
 //           <ul className=' justify-between items-center hidden md:flex'>
 //             <li>
-//               <a>How it works </a> 
+//               <a>How it works </a>
 //             </li>
 //               <li>
-//               <a>Pricing</a> 
+//               <a>Pricing</a>
 //             </li>
 
 //            <li>
-//               <a>Demo</a> 
+//               <a>Demo</a>
 //             </li>
 //            <li>
-//               <a>Blog</a> 
+//               <a>Blog</a>
 //             </li>
 //           </ul>
 //         </div>
@@ -121,9 +120,8 @@ import Link from 'next/link';
 // }
 // export default NavBar;
 
-
-import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
+import { Fragment, useState } from "react";
+import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
   Bars3Icon,
@@ -132,38 +130,73 @@ import {
   FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+} from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  PhoneIcon,
+  PlayCircleIcon,
+} from "@heroicons/react/20/solid";
 
 const products = [
-  { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-  { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-  { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-  { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
+  {
+    name: "Analytics",
+    description: "Get a better understanding of your traffic",
+    href: "#",
+    icon: ChartPieIcon,
+  },
+  {
+    name: "Engagement",
+    description: "Speak directly to your customers",
+    href: "#",
+    icon: CursorArrowRaysIcon,
+  },
+  {
+    name: "Security",
+    description: "Your customers’ data will be safe and secure",
+    href: "#",
+    icon: FingerPrintIcon,
+  },
+  {
+    name: "Integrations",
+    description: "Connect with third-party tools",
+    href: "#",
+    icon: SquaresPlusIcon,
+  },
+  {
+    name: "Automations",
+    description: "Build strategic funnels that will convert",
+    href: "#",
+    icon: ArrowPathIcon,
+  },
+];
 const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
-]
+  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
+  { name: "Contact sales", href: "#", icon: PhoneIcon },
+];
 
 // function classNames(...classes) {
 //   return classes.filter(Boolean).join(' ')
 // }
 
 export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <header className="bg-white fixed top-0 right-0 left-0">
+      <nav
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
         <div className="flex lg:flex-1 items-center space-x-4">
           <a href="#" className="-m-1.5 p-1.5">
-
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            <img
+              className="h-8 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt=""
+            />
           </a>
-          <span className='text-lg font-medium'> OkProfessor</span>
+          <span className="text-lg font-medium"> OkProfessor</span>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -176,8 +209,6 @@ export default function Example() {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          
-
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             How it works
           </a>
@@ -187,16 +218,25 @@ export default function Example() {
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Pricing
           </a>
-
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
           </a> */}
-          <Link href="/signup" > <Button variant="default" size="sm" >Get Started</Button></Link>
+          <Link href="/signup">
+            {" "}
+            <Button variant="default" size="sm">
+              Get Started
+            </Button>
+          </Link>
         </div>
       </nav>
-      <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+      <Dialog
+        as="div"
+        className="lg:hidden"
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+      >
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
@@ -261,9 +301,8 @@ export default function Example() {
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Pricing 
+                  Pricing
                 </a>
-                
               </div>
               <div className="py-6">
                 <a
@@ -278,5 +317,5 @@ export default function Example() {
         </Dialog.Panel>
       </Dialog>
     </header>
-  )
+  );
 }

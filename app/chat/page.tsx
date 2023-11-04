@@ -45,7 +45,7 @@ const chat = () => {
   ];
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 mt-20">
       {/* <div className="flex flex-col space-y-4  bg-slate-100 w-[20%] fixed top-20  bottom-0 left-0 h-[calc(100vh-theme(space.20))] overflow-y-auto ">
         <h4 className="h-10 flex items-center mx-4 text-md text-slate-600 font-medium mt-4">
           {" "}
@@ -70,7 +70,7 @@ const chat = () => {
         ))}
       </div> */}
 
-      <div className=" bg-slate-100 w-[20%] fixed top-20 bottom-0 left-0 ">
+      <div className=" bg-slate-100 w-[20%] fixed top-20 bottom-0 left-0 hidden lg:block ">
         <div className="h-[calc(100vh-theme(space.20))] overflow-y-auto  flex flex-col space-y-6 pb-6">
           <h4 className="h-10 flex items-center mx-4 text-md text-slate-600 font-medium mt-4">
             Chat history
@@ -95,8 +95,8 @@ const chat = () => {
         </div>
       </div>
 
-      <div className="flex justify-center space-x-16 lg:mx-44 md:mx-36">
-        <div className=" w-full border-l-2  ">
+      <div className="flex justify-center space-x-16 lg:mx-44 md:mx-36 mx-12">
+        <div className=" w-full   ">
           <div className=" lg:mr-32 lg:ml-32">
             <div>
               {messages.length !== 0 ? (
