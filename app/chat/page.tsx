@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { useEffect, useRef } from "react";
 import Textarea from "react-textarea-autosize";
 import { Plus, MessageSquare, User2, Bot, SendHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 const chat = () => {
-  let messages = [
+  let initialMessages = [
     { id: 1, role: "user", content: "Hey how are you" },
     {
       id: 2,
@@ -15,12 +16,43 @@ const chat = () => {
     },
   ];
 
+  interface Message {
+    id: number;
+    role: string;
+    content: string;
+  }
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [newMessage, setNewMessage] = useState<string>("");
+  const messageEndRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    if (newMessage.trim() !== "") {
+      const message: Message = {
+        id: messages.length + 1,
+        role: "user",
+        content: newMessage,
+      };
+      setMessages([...messages, message]);
+      setNewMessage("");
+    }
+  };
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   let chatTitles = [
     { id: 1, title: "Some chat" },
     { id: 2, title: "OpenAI is awesome" },
     { id: 3, title: "Anthropic" },
     { id: 4, title: "Phind is for coding" },
-    { id: 5, title: "HuggingFace is opensource" },
+    {
+      id: 5,
+      title: "hugginface ",
+    },
     { id: 1, title: "Some chat" },
     { id: 2, title: "OpenAI is awesome" },
     { id: 3, title: "Anthropic" },
@@ -136,8 +168,11 @@ const chat = () => {
           </div>
         </div>
       </div>
-
-      <form className="fixed bottom-2  left-1/2 transform -translate-x-1/2 w-1/2 ">
+      <div ref={messageEndRef}> </div>
+      <form
+        className="fixed bottom-2  left-1/2 transform -translate-x-1/2 w-1/2 "
+        onSubmit={handleSubmit}
+      >
         <div className="flex items-center ">
           <Textarea
             tabIndex={0}
@@ -146,7 +181,11 @@ const chat = () => {
             autoFocus
             placeholder="Send message..."
             spellCheck={false}
-            className="w-full focus:outline-none shadow-slate-400 border-2 shadow-2xl placeholder:text-gray-400 text-sm text-white p-5 pr-16 rounded-xl bg-gray-50"
+            value={newMessage}
+            onChange={(e) => {
+              setNewMessage(e.target.value);
+            }}
+            className="w-full focus:outline-none shadow-slate-400 border-2 shadow-2xl placeholder:text-gray-400 text-sm text-slate-600 p-5 pr-16 rounded-xl bg-gray-50"
           />
           <button className="flex justify-center items-center bg-slate-900 absolute  p-2 rounded-lg right-0 mr-5 h-10 w-10">
             {" "}

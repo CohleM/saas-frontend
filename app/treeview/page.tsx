@@ -1,8 +1,9 @@
-"use client"
+"use client";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
-import * as React from "react"
+import * as React from "react";
 //import { Shell } from "@acme/components/shells/shell"
-import { Tree } from "@/components/treeview"
+import { Tree } from "@/components/treeview";
 import { Workflow, Folder, Layout } from "lucide-react";
 
 const data = [
@@ -70,22 +71,29 @@ const data = [
   },
 ];
 
-
 export default function IndexPage() {
-  const [content, setContent] = React.useState("Admin Page")
+  const [content, setContent] = React.useState("Admin Page");
+
+  const docs = [
+    {
+      uri: "./Calusic_2022.pdf",
+      fileType: "pdf",
+    }, // Remote file
+  ];
+
   return (
-    
-      <div className="flex min-h-full space-x-2">
-        <Tree
-          data={data}
-          className="flex-shrink-0 w-[300px] h-[560px] border-[1px]"
-          initialSlelectedItemId="f12"
-          onSelectChange={(item) => setContent(item?.name ?? "")}
-          folderIcon={Folder}
-          itemIcon={Workflow}
-        />
-        <div className="flex-1">{content}</div>
-      </div>
-    
-  )
+    <div className="flex min-h-full space-x-2 mt-24">
+      <Tree
+        data={data}
+        className=" w-[300px] h-[560px] border-[1px] "
+        initialSlelectedItemId="f12"
+        onSelectChange={(item) => setContent(item?.name ?? "")}
+        folderIcon={Folder}
+        itemIcon={Workflow}
+      />
+      <div className="">helo </div>
+      {/* <div className="flex-1">{content}</div> */}
+      <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+    </div>
+  );
 }
