@@ -75,10 +75,15 @@ export default function IndexPage() {
   const [content, setContent] = React.useState("Admin Page");
 
   const docs = [
+    // {
+    //   uri: "./Calusic_2022.pdf",
+    //   fileType: "pdf",
+    // }, // Remote file
+
     {
-      uri: "./Calusic_2022.pdf",
+      uri: "https://arxiv.org/pdf/2008.12009.pdf",
       fileType: "pdf",
-    }, // Remote file
+    },
   ];
 
   return (
