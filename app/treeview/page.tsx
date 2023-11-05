@@ -77,8 +77,6 @@ interface DocsType {
 }
 
 export default function IndexPage() {
-  const [content, setContent] = React.useState("./Calusic_2022.pdf");
-
   const [activeDocument, setActiveDocument] = React.useState<
     DocsType | undefined
   >();
@@ -132,10 +130,17 @@ export default function IndexPage() {
         />
       </div>
       <div className="flex items-center justify-center space-x-16 mt-20  ">
-        <div className="w-1/2 h-full">
+        <div className="w-1/2 h-full bg-slate-300">
           <DocViewer
             documents={docs}
             activeDocument={activeDocument}
+            config={{
+              header: {
+                disableHeader: true,
+                disableFileName: true,
+                retainURLParams: true,
+              },
+            }}
             // onDocumentChange={handleDocumentChange}
           />
         </div>
