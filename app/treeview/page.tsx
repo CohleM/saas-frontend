@@ -79,10 +79,27 @@ interface DocsType {
 export default function IndexPage() {
   const [content, setContent] = React.useState("./Calusic_2022.pdf");
 
+  const [activeDocument, setActiveDocument] = React.useState();
+
+  const docs = [
+    {
+      uri: "./Calusic_2022.pdf",
+      fileType: "pdf",
+    },
+    {
+      uri: "./Campbell_2021.pdf",
+      fileType: "pdf",
+    },
+  ];
+
   const handleTreeViewSelect = (item: TreeDataItem | undefined) => {
     if (item && item.path) {
+      docs.forEach((element) => {
+        if (element.uri == item.path) {
+          setActiveDocument(element); // Set the content to the path
+        }
+      });
       // Check if the selected item has a path property
-      setContent(item.path); // Set the content to the path
     }
   };
 
@@ -95,20 +112,9 @@ export default function IndexPage() {
   //     ]
   //   : []; // Load the content dynamically
 
-  const [docs, setDocs] = React.useState<DocsType[]>([]);
-
-  React.useEffect(() => {
-    if (content) {
-      setDocs([
-        {
-          uri: content,
-          fileType: "pdf",
-        },
-      ]);
-    } else {
-      setDocs([]); // Clear 'docs' when content is null
-    }
-  }, [content]);
+  // const handleDocumentChange = (document) => {
+  //   setActiveDocument(document);
+  // };
 
   return (
     <div>
@@ -124,7 +130,11 @@ export default function IndexPage() {
       </div>
       <div className="flex items-center justify-center space-x-16 mt-20  ">
         <div className="w-1/2 h-full">
-          <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+          <DocViewer
+            documents={docs}
+            activeDocument={activeDocument}
+            // onDocumentChange={handleDocumentChange}
+          />
         </div>
       </div>
     </div>
