@@ -79,7 +79,9 @@ interface DocsType {
 export default function IndexPage() {
   const [content, setContent] = React.useState("./Calusic_2022.pdf");
 
-  const [activeDocument, setActiveDocument] = React.useState();
+  const [activeDocument, setActiveDocument] = React.useState<
+    DocsType | undefined
+  >();
 
   const docs = [
     {
@@ -96,6 +98,7 @@ export default function IndexPage() {
     if (item && item.path) {
       docs.forEach((element) => {
         if (element.uri == item.path) {
+          console.log(element);
           setActiveDocument(element); // Set the content to the path
         }
       });
