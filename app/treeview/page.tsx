@@ -3,7 +3,7 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
 import * as React from "react";
 //import { Shell } from "@acme/components/shells/shell"
-import { Tree } from "@/components/treeview";
+import { Tree, TreeDataItem } from "@/components/treeview";
 import { Workflow, Folder, Layout } from "lucide-react";
 
 const data = [
@@ -20,7 +20,7 @@ const data = [
   },
   {
     id: "4",
-    name: "Direct Messages",
+    name: "Direct Messages1",
     children: [
       {
         id: "d1",
@@ -37,13 +37,13 @@ const data = [
   },
   {
     id: "5",
-    name: "Direct Messages",
+    name: "Direct Messages2",
     children: [
       {
         id: "e1",
         name: "Alice",
         children: [
-          { id: "e11", name: "Alice2" },
+          { id: "e11", name: "Alice2", path: "./Campbell_2021.pdf" },
           { id: "e12", name: "Bob2" },
           { id: "e13", name: "Charlie2" },
         ],
@@ -54,7 +54,7 @@ const data = [
   },
   {
     id: "6",
-    name: "Direct Messages",
+    name: "Direct Messages3",
     children: [
       {
         id: "f1",
@@ -62,7 +62,7 @@ const data = [
         children: [
           { id: "f11", name: "Alice2" },
           { id: "f12", name: "Bob2" },
-          { id: "f13", name: "Charlie2" },
+          { id: "f13", name: "Charlie2", path: "./Calusic_2022.pdf" },
         ],
       },
       { id: "f2", name: "Bob" },
@@ -71,34 +71,62 @@ const data = [
   },
 ];
 
+interface DocsType {
+  uri: string;
+  fileType: string;
+}
+
 export default function IndexPage() {
-  const [content, setContent] = React.useState("Admin Page");
+  const [content, setContent] = React.useState("./Calusic_2022.pdf");
 
-  const docs = [
-    // {
-    //   uri: "./Calusic_2022.pdf",
-    //   fileType: "pdf",
-    // }, // Remote file
+  const handleTreeViewSelect = (item: TreeDataItem | undefined) => {
+    if (item && item.path) {
+      // Check if the selected item has a path property
+      setContent(item.path); // Set the content to the path
+    }
+  };
 
-    {
-      uri: "https://arxiv.org/pdf/2008.12009.pdf",
-      fileType: "pdf",
-    },
-  ];
+  // const docs = content
+  //   ? [
+  //       {
+  //         uri: content,
+  //         fileType: "pdf",
+  //       },
+  //     ]
+  //   : []; // Load the content dynamically
+
+  const [docs, setDocs] = React.useState<DocsType[]>([]);
+
+  React.useEffect(() => {
+    if (content) {
+      setDocs([
+        {
+          uri: content,
+          fileType: "pdf",
+        },
+      ]);
+    } else {
+      setDocs([]); // Clear 'docs' when content is null
+    }
+  }, [content]);
 
   return (
-    <div className="flex min-h-full space-x-2 mt-24">
-      <Tree
-        data={data}
-        className=" w-[300px] h-[560px] border-[1px] "
-        initialSlelectedItemId="f12"
-        onSelectChange={(item) => setContent(item?.name ?? "")}
-        folderIcon={Folder}
-        itemIcon={Workflow}
-      />
-      <div className="">helo </div>
-      {/* <div className="flex-1">{content}</div> */}
-      <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+    <div>
+      <div className="fixed left-0 bottom-0 top-28 w-1/2 h-screen">
+        <Tree
+          data={data}
+          className=" w-1/3 h-full border-[1px]"
+          initialSlelectedItemId="f13"
+          onSelectChange={handleTreeViewSelect}
+          folderIcon={Folder}
+          itemIcon={Workflow}
+        />
+      </div>
+      <div className="flex items-center justify-center space-x-16 mt-20  ">
+        <div className="w-1/2 h-full">
+          <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+        </div>
+      </div>
     </div>
   );
 }
