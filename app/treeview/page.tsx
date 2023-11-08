@@ -81,28 +81,65 @@ export default function IndexPage() {
     DocsType | undefined
   >();
 
-  const docs = [
-    {
-      uri: "./Calusic_2022.pdf",
-      fileType: "pdf",
-    },
-    {
-      uri: "./Campbell_2021.pdf",
-      fileType: "pdf",
-    },
-  ];
+  const [docs, setDocs] = React.useState<DocsType[]>([]);
 
-  const handleTreeViewSelect = (item: TreeDataItem | undefined) => {
-    if (item && item.path) {
-      docs.forEach((element) => {
-        if (element.uri == item.path) {
-          console.log(element);
-          setActiveDocument(element); // Set the content to the path
+  //const [docs, setDocs] = React.useState();
+
+  React.useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const allFiles = await fetch("http://localhost:8000/file/allfiles/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        // Process the fetched data here
+        if (allFiles.ok) {
+          //console.log("heyyyy these are files ,", allFiles.json());
+          const data = await allFiles.json();
+
+          let constructDocs: DocsType[] = [];
+
+          data.forEach((eachItem: any) => {
+            console.log(eachItem);
+            constructDocs.push({ uri: eachItem.file, fileType: "pdf" });
+          });
+
+          setDocs(constructDocs);
+          //console.log("heyy", docs);
         }
-      });
-      // Check if the selected item has a path property
+      };
+      fetchData();
+    } catch (error) {
+      console.log(error);
     }
-  };
+  }, []);
+
+  //console.log("outside", docs);
+
+  // const ndocs = [
+  //   {
+  //     uri: "https://my-testing-bucket69.s3.amazonaws.com/static/files/Campbell_2021.pdf",
+  //     fileType: "pdf",
+  //   },
+  //   {
+  //     uri: "./Campbell_2021.pdf",
+  //     fileType: "pdf",
+  //   },
+  // ];
+
+  // const handleTreeViewSelect = (item: TreeDataItem | undefined) => {
+  //   if (item && item.path) {
+  //     docs.forEach((element) => {
+  //       if (element.uri == item.path) {
+  //         console.log(element);
+  //         setActiveDocument(element); // Set the content to the path
+  //       }
+  //     });
+  //     // Check if the selected item has a path property
+  //   }
+  // };
 
   // const docs = content
   //   ? [
@@ -124,7 +161,7 @@ export default function IndexPage() {
           data={data}
           className=" w-1/3 h-full border-[1px]"
           initialSlelectedItemId="f13"
-          onSelectChange={handleTreeViewSelect}
+          // onSelectChange={handleTreeViewSelect}
           folderIcon={Folder}
           itemIcon={Workflow}
         />
@@ -133,7 +170,7 @@ export default function IndexPage() {
         <div className="w-1/2 h-full bg-slate-300">
           <DocViewer
             documents={docs}
-            activeDocument={activeDocument}
+            activeDocument={docs[0]}
             config={{
               header: {
                 disableHeader: true,
