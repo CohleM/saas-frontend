@@ -15,6 +15,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
   const ref = useRef<EditorJS>();
 
   //initialize editorjs
+
   useEffect(() => {
     //initialize editor if we don't have a reference
     if (!ref.current) {
