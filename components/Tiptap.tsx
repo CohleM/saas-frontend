@@ -5,9 +5,6 @@ import { Button } from "@/components/ui/button";
 import { BubbleMenu, useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useState, useEffect } from "react";
-// import BubbleMenu from '@tiptap/extension-bubble-menu'
-
-
 
 
 interface IResponseObject {
@@ -34,17 +31,7 @@ const Tiptap = () => {
 
 
   const handleClick = () => {
-    // console.log('exec')
-    // const { view, state } = editor
-    // const { from, to } = view.state.selection
-    // const text = state.doc.textBetween(from, to, '')
 
-    // console.log('txt', text)
-    // if (editor) {
-    //   editor.commands.insertContent('Example Text gggg')
-    // } 
-
-    
     setEventSourceInitialized(true);
   };
 
@@ -54,40 +41,25 @@ const Tiptap = () => {
 
       const eventSource = new EventSource("http://localhost:8000/file/chatgpt/");
 
-      if (editor) {
+
 
         eventSource.onmessage = (event) => {
             const responseObject = JSON.parse(event.data);
             editor.commands.insertContent(responseObject['content']) 
-
-            // setResponse((prev: IResponseObject) => {
-            //     const responseObjectRole = responseObject["role"] || "";
-            //     const responseObjectContent = responseObject["content"] || "";
-            //     const combinedObject = {
-            //         // role: prev.role + responseObjectRole,
-            //         role: prev.role + responseObjectRole,
-            //         content: responseObjectContent,
-            //     };
-            //     return combinedObject;
-            // });
         };
-  
+        console.log('gg man ')
         eventSource.onerror = (error) => {
             console.log("Error with SSE connection:", error);
         };
-      }
-
-      return () => {
           eventSource.close();
-      };
-  },[eventSourceInitialized] )
+  },[] )
 
 
   return (
     <div>
         <Button onClick={handleClick}> Click me</Button>
 
-        {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+        {/* {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={editor.isActive('bold') ? 'is-active' : ''}
@@ -106,7 +78,7 @@ const Tiptap = () => {
         >
           strike
         </button>
-      </BubbleMenu>}
+      </BubbleMenu>} */}
 
         <EditorContent editor={editor} />
     </div>
