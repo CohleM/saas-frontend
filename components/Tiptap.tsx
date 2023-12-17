@@ -21,7 +21,7 @@ const Tiptap = () => {
   // const [tiptap, setTiptap] = useState();
   const [holdEditing, setHoldEditing] = useState(false);
   const [msg, setMsg] = useState<string>('')
-
+  const [cursorIndex, setCursorIndex] = useState(0);
 
   const [data, setData] = useState('hello this is cool haha '); 
   const [eventSourceInitialized, setEventSourceInitialized] = useState(false);
@@ -96,9 +96,16 @@ const Tiptap = () => {
           
           console.log('from', from, 'to', to)
           console.log(text)
+
+          setCursorIndex(to) 
+          //editor.commands.selectTextblockEnd()
+          editor.commands.insertContentAt(to,'\n') 
+          // editor.commands.insertContent('\n')
+          // editor.commands.newlineInCode()
           
           socket.send(text);
           setHoldEditing(true);
+          
         }
 
     }
