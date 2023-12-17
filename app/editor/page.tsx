@@ -6,7 +6,7 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 // import Tiptap from '@/components/Tiptap'
-import Tiptap from "@/components/Tiptap";
+import Tiptap from "@/components/editor/Tiptap";
 
 // important that we use dynamic loading here
 // editorjs should only be rendered on the client side.

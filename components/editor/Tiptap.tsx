@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { BubbleMenu, useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useState, useEffect } from "react";
-
+import { EditorBubbleMenu } from "./bubble-menu";
 
 interface IResponseObject {
   role: string;
@@ -99,11 +99,15 @@ const Tiptap = () => {
 
           setCursorIndex(to) 
           //editor.commands.selectTextblockEnd()
-          editor.commands.insertContentAt(to,'\n') 
+          
+          editor.commands.insertContentAt(to,' ') 
+          editor.commands.newlineInCode()
+
           // editor.commands.insertContent('\n')
           // editor.commands.newlineInCode()
           
           socket.send(text);
+          editor.commands.selectTextblockEnd()
           setHoldEditing(true);
           
         }
@@ -161,6 +165,7 @@ const Tiptap = () => {
           strike
         </button>
       </BubbleMenu>} */}
+      {editor && <EditorBubbleMenu editor={editor} />}
 
         <EditorContent editor={editor} />
     </div>
