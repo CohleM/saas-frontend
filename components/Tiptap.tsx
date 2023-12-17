@@ -19,7 +19,7 @@ const Tiptap = () => {
   const [inputValue, setInputValue] = useState('');
   const [socket, setSocket] = useState<WebSocket | null>(null);
   // const [tiptap, setTiptap] = useState();
-
+  const [holdEditing, setHoldEditing] = useState(false);
   const [msg, setMsg] = useState<string>('')
 
 
@@ -55,16 +55,18 @@ const Tiptap = () => {
     };
   
     ws.onmessage = (e) => {
-      const message = e.data;
 
+      const message = JSON.parse(e.data);
 
-      console.log('backend ', message)
-
+      console.log('backend ', message['content'], message['finish_reason'])
+      
       if (editor) {
-        editor.commands.insertContent(message)
+        
+        editor.commands.insertContent(message['content'])
+        if (message['finish_reason'] == 'stop') {
+          setHoldEditing(false);
+        }
       }
-    
-      // setMsg(msg)
       
     };
   
@@ -91,14 +93,42 @@ const Tiptap = () => {
         if (editor) {
           const { from, to } = editor.view.state.selection
           const text = editor?.view.state.doc.textBetween(from, to, '')
+          
+          console.log('from', from, 'to', to)
           console.log(text)
-          // editor?.commands.insertContent('text')
+          
           socket.send(text);
+          setHoldEditing(true);
         }
 
     }
 
   };
+
+  useEffect(() => {
+  
+    const onKeyDown = (e: KeyboardEvent) => {
+      alert('Key pressed!'); 
+      e.preventDefault();
+    }
+    const mousedownHandler = (e: MouseEvent) => {
+      alert('Key pressed! gg');
+      e.preventDefault();
+    }
+
+    if(holdEditing){
+      document.addEventListener("keydown", onKeyDown);
+      window.addEventListener("mousedown", mousedownHandler);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("mousedown", mousedownHandler);
+    }; 
+  
+
+  }, [holdEditing])
+  
 
   return (
     <div>
