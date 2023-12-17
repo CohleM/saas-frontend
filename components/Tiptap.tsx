@@ -14,8 +14,25 @@ interface IResponseObject {
 
 
 const Tiptap = () => {
+
+  const [messages, setMessages] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  // const [tiptap, setTiptap] = useState();
+
+  const [msg, setMsg] = useState<string>('')
+
+
   const [data, setData] = useState('hello this is cool haha '); 
   const [eventSourceInitialized, setEventSourceInitialized] = useState(false);
+
+
+
+
+  const handleClick = () => {
+
+  };
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -23,41 +40,69 @@ const Tiptap = () => {
     content: data,
     editorProps: {
         attributes: {
-          class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+          class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-base m-5 focus:outline-none',
         },
       }
   })
 
-
-
-  const handleClick = () => {
-
-    setEventSourceInitialized(true);
-  };
-
   //openai streaming response
-
   useEffect(() => {
-
-      const eventSource = new EventSource("http://localhost:8000/file/chatgpt/");
-
+    const ws = new WebSocket('ws://localhost:8000/ws');
 
 
-        eventSource.onmessage = (event) => {
-            const responseObject = JSON.parse(event.data);
-            editor.commands.insertContent(responseObject['content']) 
-        };
-        console.log('gg man ')
-        eventSource.onerror = (error) => {
-            console.log("Error with SSE connection:", error);
-        };
-          eventSource.close();
-  },[] )
+    ws.onopen = () => {
+      console.log('WebSocket connection opened.');
+    };
+  
+    ws.onmessage = (e) => {
+      const message = e.data;
 
+
+      console.log('backend ', message)
+
+      if (editor) {
+        editor.commands.insertContent(message)
+      }
+    
+      // setMsg(msg)
+      
+    };
+  
+    ws.onclose = () => {
+      console.log('WebSocket connection closed.');
+    };
+  
+    setSocket(ws);
+  
+    return () => {
+      console.log('Component unmounted. Closing WebSocket connection.');
+      ws.close();
+    };
+  }, [editor]);
+
+  const sendMessage = () => {
+    
+    if(socket){
+
+
+        // editor?.commands.
+        console.log('fron frontend :', inputValue)
+
+        if (editor) {
+          const { from, to } = editor.view.state.selection
+          const text = editor?.view.state.doc.textBetween(from, to, '')
+          console.log(text)
+          // editor?.commands.insertContent('text')
+          socket.send(text);
+        }
+
+    }
+
+  };
 
   return (
     <div>
-        <Button onClick={handleClick}> Click me</Button>
+        <Button onClick={sendMessage}> Click me</Button>
 
         {/* {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
         <button
