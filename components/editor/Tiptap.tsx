@@ -10,6 +10,9 @@ import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Link from "@tiptap/extension-link"
 import Underline from '@tiptap/extension-underline'
+import { Markdown } from 'tiptap-markdown';
+import HardBreak from '@tiptap/extension-hard-break'
+
 interface IResponseObject {
   role: string;
   content: string;
@@ -26,7 +29,7 @@ const Tiptap = () => {
   const [msg, setMsg] = useState<string>('')
   const [cursorIndex, setCursorIndex] = useState(0);
 
-  const [data, setData] = useState('hello this is cool haha '); 
+  const [data, setData] = useState('hi'); 
   const [eventSourceInitialized, setEventSourceInitialized] = useState(false);
 
 
@@ -40,6 +43,17 @@ const Tiptap = () => {
       TaskList,
       Link,
       Underline,
+      HardBreak,
+      Markdown.configure({
+        html: true,                  // Allow HTML input/output
+        tightLists: true,            // No <p> inside <li> in markdown output
+        tightListClass: 'tight',     // Add class to <ul> allowing you to remove <p> margins when tight
+        bulletListMarker: '-',       // <li> prefix in markdown output
+        linkify: false,              // Create links from "https://..." text
+        breaks: false,               // New lines (\n) in markdown input are converted to <br>
+        transformPastedText: false,  // Allow to paste markdown text in the editor
+        transformCopiedText: false,  // Copied text is transformed to markdown
+      })
     ],
     content: data,
     editorProps: {
@@ -66,7 +80,10 @@ const Tiptap = () => {
       
       if (editor) {
         
-        editor.commands.insertContent(message['content'])
+        editor.commands.insertContent(message['content']) 
+        if (message['content'] === null ) {
+          editor.commands.insertContent('<br>') 
+        }
         if (message['finish_reason'] == 'stop') {
           setHoldEditing(false);
         }
@@ -102,17 +119,27 @@ const Tiptap = () => {
           console.log(text)
 
           setCursorIndex(to) 
-          //editor.commands.selectTextblockEnd()
-          
-          editor.commands.insertContentAt(to,' ') 
-          editor.commands.newlineInCode()
-
-          // editor.commands.insertContent('\n')
+          editor.commands.selectTextblockEnd()
           // editor.commands.newlineInCode()
           
-          socket.send(text);
+          // editor.commands.insertContentAt(to,' ') 
+          // editor.commands.newlineInCode()
+
+          editor.commands.insertContent('\n')
           
-          setHoldEditing(true);
+          // editor.commands.insertContent('<h1> This is markdown</h1>') 
+          // editor.commands.insertContent('<h1>Hello</h1><p>This is normal text</p>')
+          editor.commands.insertContent('# This is all good')
+          editor.commands.splitBlock({ keepMarks: false })
+          editor.commands.insertContent('This is paragraph') 
+          // editor.commands.insertContent('# This is all good \n This is a paragraph')
+
+          // editor.commands.setHardBreak()
+          // editor.commands.insertContent('<p>Normal text</p>')
+          
+          // socket.send(text);
+          
+          // setHoldEditing(true);
           
         }
 

@@ -24,6 +24,7 @@
     "@react-oauth/google": "^0.11.1",
     "@tailwindcss/typography": "^0.5.10",
     "@tiptap/extension-bubble-menu": "^2.1.13",
+    "@tiptap/extension-hard-break": "^2.1.13",
     "@tiptap/extension-link": "^2.1.13",
     "@tiptap/extension-task-item": "^2.1.13",
     "@tiptap/extension-task-list": "^2.1.13",
@@ -41,6 +42,7 @@
     "react-textarea-autosize": "^8.5.3",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "tiptap-markdown": "^0.8.8",
     "use-resize-observer": "^9.1.0",
     "ws": "^8.15.0"
   },
