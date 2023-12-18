@@ -6,7 +6,10 @@ import { BubbleMenu, useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useState, useEffect } from "react";
 import { EditorBubbleMenu } from "./bubble-menu";
-
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
+import Link from "@tiptap/extension-link"
+import Underline from '@tiptap/extension-underline'
 interface IResponseObject {
   role: string;
   content: string;
@@ -36,11 +39,15 @@ const Tiptap = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
+      TaskItem,
+      TaskList,
+      Link,
+      Underline,
     ],
     content: data,
     editorProps: {
         attributes: {
-          class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-base m-5 focus:outline-none',
+          class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-base xl:prose-base m-5 focus:outline-none',
         },
       }
   })

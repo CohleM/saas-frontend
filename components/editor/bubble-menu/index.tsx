@@ -7,9 +7,9 @@ import {
   StrikethroughIcon,
   CodeIcon,
 } from "lucide-react";
-// import { NodeSelector } from "./node-selector";
+import { NodeSelector } from "./node-selector";
 // import { ColorSelector } from "./color-selector";
-// import { LinkSelector } from "./link-selector";
+import { LinkSelector } from "./link-selector";
 import { cn } from "@/lib/utils";
 
 export interface BubbleMenuItem {
@@ -21,7 +21,7 @@ export interface BubbleMenuItem {
 
 type EditorBubbleMenuProps = Omit<BubbleMenuProps, "children">;
 
-export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
+export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
   const items: BubbleMenuItem[] = [
     {
       name: "bold",
@@ -89,7 +89,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
       {...bubbleMenuProps}
       className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
     >
-      {/* <NodeSelector
+      <NodeSelector
         editor={props.editor}
         isOpen={isNodeSelectorOpen}
         setIsOpen={() => {
@@ -106,7 +106,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
           setIsColorSelectorOpen(false);
           setIsNodeSelectorOpen(false);
         }}
-      /> */}
+      />
       <div className="flex">
         {items.map((item, index) => (
           <button
