@@ -32,9 +32,6 @@ const Tiptap = () => {
 
 
 
-  const handleClick = () => {
-
-  };
 
   const editor = useEditor({
     extensions: [
@@ -114,7 +111,7 @@ const Tiptap = () => {
           // editor.commands.newlineInCode()
           
           socket.send(text);
-          editor.commands.selectTextblockEnd()
+          
           setHoldEditing(true);
           
         }

@@ -11,6 +11,7 @@ import { NodeSelector } from "./node-selector";
 // import { ColorSelector } from "./color-selector";
 import { LinkSelector } from "./link-selector";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export interface BubbleMenuItem {
   name: string;
@@ -89,6 +90,9 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
       {...bubbleMenuProps}
       className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
     >
+      <Button className="flex h-full items-center gap-1 whitespace-nowrap p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 bg-white">
+        AI commands
+      </Button>
       <NodeSelector
         editor={props.editor}
         isOpen={isNodeSelectorOpen}
