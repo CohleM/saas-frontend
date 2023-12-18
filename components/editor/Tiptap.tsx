@@ -76,14 +76,14 @@ const Tiptap = () => {
 
       const message = JSON.parse(e.data);
 
-      console.log('backend ', message['content'], message['finish_reason'])
+      console.log('backend ', message['content'])
       
       if (editor) {
         
-        editor.commands.insertContent(message['content']) 
-        if (message['content'] === null ) {
-          editor.commands.insertContent('<br>') 
-        }
+        // editor.commands.insertContent(message['content']) 
+        // editor.getText() 
+        editor.commands.setContent(message['content'])
+        
         if (message['finish_reason'] == 'stop') {
           setHoldEditing(false);
         }
@@ -120,26 +120,32 @@ const Tiptap = () => {
 
           setCursorIndex(to) 
           editor.commands.selectTextblockEnd()
+          editor.commands.splitBlock({ keepMarks: false })
           // editor.commands.newlineInCode()
           
           // editor.commands.insertContentAt(to,' ') 
           // editor.commands.newlineInCode()
 
           editor.commands.insertContent('\n')
+          console.log(editor.getText())
+          
           
           // editor.commands.insertContent('<h1> This is markdown</h1>') 
           // editor.commands.insertContent('<h1>Hello</h1><p>This is normal text</p>')
-          editor.commands.insertContent('# This is all good')
-          editor.commands.splitBlock({ keepMarks: false })
-          editor.commands.insertContent('This is paragraph') 
+
+          // split Node
+          // editor.commands.insertContent('# This is all good')
+          // editor.commands.splitBlock({ keepMarks: false })
+          // editor.commands.insertContent('This is paragraph') 
+
+
           // editor.commands.insertContent('# This is all good \n This is a paragraph')
 
           // editor.commands.setHardBreak()
           // editor.commands.insertContent('<p>Normal text</p>')
           
-          // socket.send(text);
-          
-          // setHoldEditing(true);
+          socket.send(text);
+          setHoldEditing(true);
           
         }
 
