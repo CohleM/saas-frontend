@@ -109,6 +109,7 @@ const Tiptap = () => {
         setStreamedContent(message['content'])
 
         if (message['finish_reason'] == 'stop') {
+
           setHoldEditing(false);
         }
       }
@@ -153,6 +154,7 @@ const Tiptap = () => {
           editor.commands.insertContent('\n')
           console.log(editor.getText())
           
+          setStreamedContent('')
           setInitialContent(editor.getText())
           
           // editor.commands.insertContent('<h1> This is markdown</h1>') 
