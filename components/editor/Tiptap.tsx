@@ -31,9 +31,9 @@ const Tiptap = () => {
 
   const [data, setData] = useState('hi'); 
   const [eventSourceInitialized, setEventSourceInitialized] = useState(false);
-
-
-
+  const [initialContent, setInitialContent] = useState('')
+  const [streamedContent, setStreamedContent] = useState('');
+  const [finalMessage, setFinalMessage] = useState('');
 
 
   const editor = useEditor({
@@ -63,6 +63,23 @@ const Tiptap = () => {
       }
   })
 
+
+  useEffect(() => {
+  //  editor?.commands.setContent(initialContent + streamedContent)
+      // console.log('initialcontent', initialContent)
+      editor?.commands.setContent(initialContent + streamedContent)
+      // setInitialContent(initialContent + streamedContent)
+
+  }, [initialContent, streamedContent])
+  
+  // useEffect(() => {
+  //   //  editor?.commands.setContent(initialContent + streamedContent)
+  //       // console.log('initialcontent', initialContent)
+  //       editor?.commands.setContent(initialContent)
+  //       // setInitialContent(initialContent + streamedContent)
+  
+  //   }, [initialContent]) 
+
   //openai streaming response
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8000/ws');
@@ -76,14 +93,21 @@ const Tiptap = () => {
 
       const message = JSON.parse(e.data);
 
-      console.log('backend ', message['content'])
+      //console.log('backend ', message['content'])
       
       if (editor) {
         
         // editor.commands.insertContent(message['content']) 
         // editor.getText() 
-        editor.commands.setContent(message['content'])
-        
+        // if (initialContent == '' ) {
+        //   setInitialContent(editor.getText())
+        // }
+        // console.log('this is initial content', initialContent) 
+        // setStreamedContent(message['content'])
+        // editor.commands.setContent(initialContent + message['content'])
+       //console.log('yeet', initialContent + message['content'])
+        setStreamedContent(message['content'])
+
         if (message['finish_reason'] == 'stop') {
           setHoldEditing(false);
         }
@@ -129,6 +153,7 @@ const Tiptap = () => {
           editor.commands.insertContent('\n')
           console.log(editor.getText())
           
+          setInitialContent(editor.getText())
           
           // editor.commands.insertContent('<h1> This is markdown</h1>') 
           // editor.commands.insertContent('<h1>Hello</h1><p>This is normal text</p>')
