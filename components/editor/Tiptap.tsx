@@ -61,7 +61,15 @@ const Tiptap = () => {
           class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-base xl:prose-base m-5 focus:outline-none',
         },
       }
+      ,
+  onUpdate: ({editor}) => {
+      checkupdate(editor)
+  }
   })
+
+  const checkupdate = (editor) => {
+    console.log(editor.getText())
+  }
 
 
   useEffect(() => {
