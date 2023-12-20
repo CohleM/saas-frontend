@@ -14,6 +14,7 @@ import { Markdown } from 'tiptap-markdown';
 import HardBreak from '@tiptap/extension-hard-break'
 import { Editor  } from "@tiptap/core";
 import useLocalStorage from "use-local-storage";
+import { useDebouncedCallback } from "use-debounce";
 
 interface IResponseObject {
   role: string;
@@ -65,19 +66,16 @@ const Tiptap = () => {
         },
       }
       ,
-  onUpdate: ({editor}) => {
+  onUpdate: (e) => {
     //set debounce function here. debounce meaning it should save the content every seconds. not on every change.  
-    debounce(editor)
+    debouncedUpdates(e)
   }
   })
 
-  const debounce = (editor: Editor ) => {
-    const getContent = editor.getText()
-    setLocalStorage(getContent)
-
-    //console.log(editor.getText())
-
-  }
+  const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
+    const json_text = editor.getJSON();
+    setLocalStorage(json_text)
+  }, 1000);
 
 
   useEffect(() => {
