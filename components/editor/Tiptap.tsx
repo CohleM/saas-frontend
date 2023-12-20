@@ -12,6 +12,8 @@ import Link from "@tiptap/extension-link"
 import Underline from '@tiptap/extension-underline'
 import { Markdown } from 'tiptap-markdown';
 import HardBreak from '@tiptap/extension-hard-break'
+import { Editor  } from "@tiptap/core";
+import useLocalStorage from "use-local-storage";
 
 interface IResponseObject {
   role: string;
@@ -34,6 +36,7 @@ const Tiptap = () => {
   const [initialContent, setInitialContent] = useState('')
   const [streamedContent, setStreamedContent] = useState('');
   const [finalMessage, setFinalMessage] = useState('');
+  const [localStorage, setLocalStorage] = useLocalStorage("Content", data);
 
 
   const editor = useEditor({
@@ -63,12 +66,17 @@ const Tiptap = () => {
       }
       ,
   onUpdate: ({editor}) => {
-      checkupdate(editor)
+    //set debounce function here. debounce meaning it should save the content every seconds. not on every change.  
+    debounce(editor)
   }
   })
 
-  const checkupdate = (editor) => {
-    console.log(editor.getText())
+  const debounce = (editor: Editor ) => {
+    const getContent = editor.getText()
+    setLocalStorage(getContent)
+
+    //console.log(editor.getText())
+
   }
 
 

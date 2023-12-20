@@ -43,6 +43,8 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "tiptap-markdown": "^0.8.8",
+    "use-debounce": "^10.0.0",
+    "use-local-storage": "^3.0.0",
     "use-resize-observer": "^9.1.0",
     "ws": "^8.15.0"
   },
