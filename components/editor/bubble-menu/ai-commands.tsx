@@ -22,6 +22,9 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 
+import {DropdownMenuCheckboxes} from "@/components/ui/multiple-options"
+import { Checkbox } from "@/components/ui/checkbox"
+
 import { createPortal } from 'react-dom'
 
 export function CheckPortal({onClose}) {
@@ -29,18 +32,44 @@ export function CheckPortal({onClose}) {
   return (
     //fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50
 // w-1/2 z-50 absolute top-0 left-0
-    <Card className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 border border-gray-500 border-solid shadow-xl p-4">
+    <Card className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 border border-gray-500 border-solid shadow-xl p-4 ">
       <CardHeader>
-        <CardTitle>Report an issue</CardTitle>
+        <CardTitle>AI Commands</CardTitle>
         <CardDescription>
-          What area are you having problems with?
+          Select options that you want to use
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
-        <div className="grid grid-cols-2 gap-4">
+
+      <div className="grid grid-cols-1 gap-4 w-full">
           <div className="grid gap-2">
-            <Label htmlFor="area">Area</Label>
-            <Select defaultValue="billing">
+            <Label htmlFor="security-level">Commands</Label>
+            <Select defaultValue="2">
+              <SelectTrigger
+                id="security-level"
+                className="line-clamp-1 w-full truncate"
+              >
+                <SelectValue placeholder="Select level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1">Generate Report</SelectItem>
+                <SelectItem value="2">Question Answering</SelectItem>
+                <SelectItem value="3">Severity 3</SelectItem>
+                <SelectItem value="4">Severity 4 (Lowest)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {/* <div className="grid gap-2">
+            <Label htmlFor="security-level">Web Search</Label>
+            </div> */}
+
+          </div>
+
+
+        <div className="grid grid-cols-1 gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="area">Select files</Label>
+            {/* <Select defaultValue="billing">
               <SelectTrigger id="area">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
@@ -51,37 +80,29 @@ export function CheckPortal({onClose}) {
                 <SelectItem value="deployments">Deployments</SelectItem>
                 <SelectItem value="support">Support</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
+            
+            <DropdownMenuCheckboxes />
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="security-level">Security Level</Label>
-            <Select defaultValue="2">
-              <SelectTrigger
-                id="security-level"
-                className="line-clamp-1 w-[160px] truncate"
-              >
-                <SelectValue placeholder="Select level" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Severity 1 (Highest)</SelectItem>
-                <SelectItem value="2">Severity 2</SelectItem>
-                <SelectItem value="3">Severity 3</SelectItem>
-                <SelectItem value="4">Severity 4 (Lowest)</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+
         </div>
-        <div className="grid gap-2">
-          <Label htmlFor="subject">Subject</Label>
-          <Input id="subject" placeholder="I need help with..." />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="description">Description</Label>
-          <Textarea
-            id="description"
-            placeholder="Please include all information relevant to your issue."
-          />
-        </div>
+        <div className="items-top flex space-x-2">
+      <Checkbox id="terms1" />
+      <div className="grid gap-1.5 leading-none">
+        <label
+          htmlFor="terms1"
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          Enable Web Search
+        </label>
+        {/* <p className="text-sm text-muted-foreground">
+          You agree to our Terms of Service and Privacy Policy.
+        </p> */}
+      </div>
+    </div>
+
+
+        
       </CardContent>
       <CardFooter className="justify-between space-x-2">
         <Button variant="ghost" onClick={onClose}>Cancel</Button>

@@ -70,7 +70,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
       // - the selected node is an image
       // - the selection is empty
       // - the selection is a node selection (for drag handles)
-      if (editor.isActive("image") || empty || isNodeSelection(selection)) {
+      if (editor.isActive("image") || empty || isNodeSelection(selection) ) {
         return false;
       }
       return true;
@@ -94,6 +94,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
 
 
   const handleOpenCard = () => {
+    props.editor.commands.deleteSelection()
     setIsCardOpen(true);
   };
 
@@ -108,8 +109,8 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
       
       <div id="portal" ref={portalRef} />
 
-      { (!isCardOpen) &&
-      <div key='gg'> 
+      
+      
     <BubbleMenu
       {...bubbleMenuProps}
       className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
@@ -177,8 +178,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
       /> */}
       
     </BubbleMenu>
-    </div>
-}
+  
     </div>
   );
 };
