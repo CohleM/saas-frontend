@@ -24,14 +24,29 @@ import { Textarea } from "@/components/ui/textarea"
 
 import {DropdownMenuCheckboxes} from "@/components/ui/multiple-options"
 import { Checkbox } from "@/components/ui/checkbox"
+import {Icons } from "@/components/ui/circular-progress"
 
+import { useState} from 'react';
 import { createPortal } from 'react-dom'
+import { Portal } from "@headlessui/react";
 
 export function CheckPortal({onClose}) {
+
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleSubmit = () => {
+    console.log('yay')
+    setIsSubmit(true)
+    onClose()
+  }
 
   return (
     //fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50
 // w-1/2 z-50 absolute top-0 left-0
+
+    <div> 
+      { 
+
     <Card className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 border border-gray-500 border-solid shadow-xl p-4 ">
       <CardHeader>
         <CardTitle>AI Commands</CardTitle>
@@ -106,9 +121,16 @@ export function CheckPortal({onClose}) {
       </CardContent>
       <CardFooter className="justify-between space-x-2">
         <Button variant="ghost" onClick={onClose}>Cancel</Button>
-        <Button>Submit</Button>
+        <Button onClick={handleSubmit} >Submit</Button>
       </CardFooter>
+
+      <Icons.spinner className="h-4 w-4 animate-spin" />
     </Card>
+    }
+    {isSubmit && <Portal><h1> Loading the menu </h1></Portal>}
+    </div>
+    
+    
   )
 }
 
