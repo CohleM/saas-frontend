@@ -16,6 +16,7 @@ import { Editor  } from "@tiptap/core";
 import useLocalStorage from "use-local-storage";
 import { useDebouncedCallback } from "use-debounce";
 
+
 interface IResponseObject {
   role: string;
   content: string;
@@ -38,6 +39,7 @@ const Tiptap = () => {
   const [streamedContent, setStreamedContent] = useState('');
   const [finalMessage, setFinalMessage] = useState('');
   const [localStorage, setLocalStorage] = useLocalStorage("Content", data);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 
   const editor = useEditor({
@@ -73,7 +75,8 @@ const Tiptap = () => {
   })
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
-    const json_text = editor.getJSON();
+    //const json_text = editor.getJSON();
+    const json_text = editor.getText();
     setLocalStorage(json_text)
   }, 1000);
 
@@ -243,7 +246,8 @@ const Tiptap = () => {
           strike
         </button>
       </BubbleMenu>} */}
-      {editor && <EditorBubbleMenu editor={editor} />}
+
+      {editor && <EditorBubbleMenu editor={editor}  />}
 
         <EditorContent editor={editor} />
     </div>

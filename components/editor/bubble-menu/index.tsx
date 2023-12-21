@@ -1,5 +1,5 @@
 import { BubbleMenu, BubbleMenuProps, isNodeSelection } from "@tiptap/react";
-import { FC, useState } from "react";
+import { FC, useState, useRef } from "react";
 import {
   BoldIcon,
   ItalicIcon,
@@ -8,10 +8,14 @@ import {
   CodeIcon,
 } from "lucide-react";
 import { NodeSelector } from "./node-selector";
+
+import {Portal} from "./portal"
+
 // import { ColorSelector } from "./color-selector";
 import { LinkSelector } from "./link-selector";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import {  CheckPortal } from "./ai-commands";
 
 export interface BubbleMenuItem {
   name: string;
@@ -81,18 +85,50 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
     },
   };
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isNodeSelectorOpen, setIsNodeSelectorOpen] = useState(false);
   const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false);
   const [isLinkSelectorOpen, setIsLinkSelectorOpen] = useState(false);
+  const [isCardOpen, setIsCardOpen] = useState(false);
+  const portalRef = useRef(null);
+
+
+  const handleOpenCard = () => {
+    setIsCardOpen(true);
+  };
+
+  const handleCloseCard = () => {
+    setIsCardOpen(false);
+  };
 
   return (
+    <div> 
+      {/* {isCardOpen && <Portal onClose={handleCloseCard} ><h1>HELLLLOOO</h1> </Portal>} */}
+      {isCardOpen && <Portal> <h1 className="bg-white text-lg"> <CheckPortal onClose={handleCloseCard}/></h1></Portal>}
+      
+      <div id="portal" ref={portalRef} />
     <BubbleMenu
       {...bubbleMenuProps}
       className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
     >
-      <Button className="flex h-full items-center gap-1 whitespace-nowrap p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 bg-white">
+      <Button className="flex h-full items-center gap-1 whitespace-nowrap p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 bg-white" 
+        onClick={handleOpenCard}>
         AI commands
       </Button>
+
+      
+      {/* <AICommands
+        editor={props.editor}
+        isOpen={isMenuOpen}
+        setIsOpen={() => {
+
+          setIsMenuOpen(!isMenuOpen)
+          setIsNodeSelectorOpen(false);
+          setIsColorSelectorOpen(false);
+          setIsLinkSelectorOpen(false);
+        }}
+      />  */}
+      
       <NodeSelector
         editor={props.editor}
         isOpen={isNodeSelectorOpen}
@@ -137,5 +173,6 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
         }}
       /> */}
     </BubbleMenu>
+    </div>
   );
 };
