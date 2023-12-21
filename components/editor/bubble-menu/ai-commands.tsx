@@ -28,7 +28,7 @@ export function CheckPortal({onClose}) {
 
   return (
 
-    <Card className="z-[99999]">
+    <Card className="w-1/2 z-50 absolute top-0 left-0 border-">
       <CardHeader>
         <CardTitle>Report an issue</CardTitle>
         <CardDescription>
