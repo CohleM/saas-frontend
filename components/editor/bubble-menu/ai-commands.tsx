@@ -27,8 +27,9 @@ import { createPortal } from 'react-dom'
 export function CheckPortal({onClose}) {
 
   return (
-
-    <Card className="w-1/2 z-50 absolute top-0 left-0 border-">
+    //fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50
+// w-1/2 z-50 absolute top-0 left-0
+    <Card className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 border border-gray-500 border-solid shadow-xl p-4">
       <CardHeader>
         <CardTitle>Report an issue</CardTitle>
         <CardDescription>

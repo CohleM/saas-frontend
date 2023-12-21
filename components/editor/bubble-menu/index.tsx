@@ -107,6 +107,9 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
       {isCardOpen && <Portal>  <CheckPortal onClose={handleCloseCard}/></Portal>}
       
       <div id="portal" ref={portalRef} />
+
+      { (!isCardOpen) &&
+      <div key='gg'> 
     <BubbleMenu
       {...bubbleMenuProps}
       className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
@@ -172,7 +175,10 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
           setIsLinkSelectorOpen(false);
         }}
       /> */}
+      
     </BubbleMenu>
+    </div>
+}
     </div>
   );
 };
