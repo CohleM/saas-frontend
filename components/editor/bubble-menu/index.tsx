@@ -107,7 +107,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
       {/* {isCardOpen && <Portal onClose={handleCloseCard} ><h1>HELLLLOOO</h1> </Portal>} */}
       {isCardOpen && <Portal>  <CheckPortal onClose={handleCloseCard}/></Portal>}
       
-      <div id="portal" ref={portalRef} />
+      {/* <div id="portal" ref={portalRef} /> */}
 
       
       

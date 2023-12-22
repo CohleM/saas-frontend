@@ -8,7 +8,7 @@ export default function Document() {
       <Head />
       <body>
         <Main />
-        <div id="portal" />
+        {/* <div id="portal" /> */}
         <NextScript />
       </body>
     </Html>

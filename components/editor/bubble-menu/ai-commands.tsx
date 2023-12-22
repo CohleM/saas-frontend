@@ -36,18 +36,22 @@ export function CheckPortal({onClose}) {
 
   const handleSubmit = () => {
     console.log('yay')
+    // onClose()
     setIsSubmit(true)
-    onClose()
+   
   }
+
 
   return (
     //fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50
 // w-1/2 z-50 absolute top-0 left-0
 
     <div> 
-      { 
+      
 
     <Card className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 border border-gray-500 border-solid shadow-xl p-4 ">
+      
+    {!isSubmit  && <div> 
       <CardHeader>
         <CardTitle>AI Commands</CardTitle>
         <CardDescription>
@@ -123,11 +127,19 @@ export function CheckPortal({onClose}) {
         <Button variant="ghost" onClick={onClose}>Cancel</Button>
         <Button onClick={handleSubmit} >Submit</Button>
       </CardFooter>
+      </div>
+        }
 
-      <Icons.spinner className="h-4 w-4 animate-spin" />
+        {isSubmit && <div> <div className="flex  gap-x-4 items-center">
+  <Icons.spinner className="h-4 w-4 animate-spin" />
+  <h1 className="text-sm">AI is generating...</h1>
+</div> </div>}
+
+      
     </Card>
-    }
-    {isSubmit && <Portal><h1> Loading the menu </h1></Portal>}
+
+    
+    
     </div>
     
     
