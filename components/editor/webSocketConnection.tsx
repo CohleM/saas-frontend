@@ -1,22 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-interface UseWebSocketReturnType {
-  socket: WebSocket | null;
-  sendMessage: (message: string) => void;
-  onMessage: (callback: (event: MessageEvent) => void) => void;
-}
-
-function useWebSocket(): UseWebSocketReturnType {
+export const useWebSocket = (url: string, onMessage: (message: any) => void) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
-    const newSocket = new WebSocket('ws://localhost:8000/ws');
-    setSocket(newSocket);
+    const ws = new WebSocket(url);
+
+    ws.onopen = () => {
+      console.log('WebSocket connection opened.');
+    };
+
+    ws.onmessage = (e) => {
+      const message = JSON.parse(e.data);
+      onMessage(message);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed.');
+    };
+
+    setSocket(ws);
 
     return () => {
-      newSocket.close();
+      console.log('Component unmounted. Closing WebSocket connection.');
+      ws.close();
     };
-  }, []);
+  }, [url, onMessage]);
 
   const sendMessage = (message: string) => {
     if (socket) {
@@ -24,13 +33,5 @@ function useWebSocket(): UseWebSocketReturnType {
     }
   };
 
-  const onMessage = (callback: (event: MessageEvent) => void) => {
-    if (socket) {
-      socket.addEventListener('message', callback);
-    }
-  };
-
-  return { socket, sendMessage, onMessage };
-}
-
-export default useWebSocket;
+  return { socket, sendMessage };
+};

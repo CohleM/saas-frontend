@@ -31,7 +31,7 @@ import { createPortal } from 'react-dom'
 import { Portal } from "@headlessui/react";
 import { useStreamedContent } from "@/app/context/StreamedContent";
 
-export function CheckPortal({onClose}) {
+export function CheckPortal({onClose, sendMessage}) {
 
   const {streamedContent, setStreamedContent} = useStreamedContent();
 
@@ -39,8 +39,10 @@ export function CheckPortal({onClose}) {
 
   const handleSubmit = () => {
     console.log('yay')
-    // onClose()
+    onClose()
     setIsSubmit(true)
+    sendMessage()
+
    
   }
 
@@ -137,10 +139,12 @@ export function CheckPortal({onClose}) {
       </div>
         }
 
-        {isSubmit && <div> <div className="flex  gap-x-4 items-center">
+
+        {/* code for loading spiral function */}
+        {/* {isSubmit && <div> <div className="flex  gap-x-4 items-center">
   <Icons.spinner className="h-4 w-4 animate-spin" />
   <h1 className="text-sm">AI is generating...</h1>
-</div> </div>}
+</div> </div>} */}
 
       
     </Card>

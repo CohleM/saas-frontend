@@ -16,7 +16,7 @@ import { LinkSelector } from "./link-selector";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {  CheckPortal } from "./ai-commands";
-
+import { Editor  } from "@tiptap/core";
 export interface BubbleMenuItem {
   name: string;
   isActive: () => boolean;
@@ -24,9 +24,22 @@ export interface BubbleMenuItem {
   icon: typeof BoldIcon;
 }
 
-type EditorBubbleMenuProps = Omit<BubbleMenuProps, "children">;
+// type EditorBubbleMenuProps = Omit<BubbleMenuProps, "children">;
 
-export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
+export interface EditorBubbleMenuProps {
+  editor: Editor;
+  sendMessage: (message: string) => void; // Include the sendMessage prop
+  shouldShow: ({ state, editor }: { state: any; editor: any; }) => boolean; // Include the shouldShow property
+  tippyOptions: {
+    moveTransition: string;
+    onHidden: () => void;
+    // other tippyOptions properties
+  };
+}
+// { editor: Editor, sendMessage: (message: string) => void }
+
+
+export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
   const items: BubbleMenuItem[] = [
     {
       name: "bold",
@@ -105,7 +118,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
   return (
     <div className="relative"> 
       {/* {isCardOpen && <Portal onClose={handleCloseCard} ><h1>HELLLLOOO</h1> </Portal>} */}
-      {isCardOpen && <Portal>  <CheckPortal onClose={handleCloseCard}/></Portal>}
+      {isCardOpen && <Portal>  <CheckPortal onClose={handleCloseCard} sendMessage={props.sendMessage}/></Portal>}
       
       {/* <div id="portal" ref={portalRef} /> */}
 

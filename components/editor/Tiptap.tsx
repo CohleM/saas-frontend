@@ -74,6 +74,10 @@ const Tiptap = () => {
     debouncedUpdates(e)
   }
   })
+  const handleSendMessage = () => {
+    sendMessage(); // Send message through the WebSocket connection
+  };
+  
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     //const json_text = editor.getJSON();
@@ -248,7 +252,7 @@ const Tiptap = () => {
         </button>
       </BubbleMenu>} */}
 
-      {editor && <EditorBubbleMenu editor={editor}   />}
+      {editor && <EditorBubbleMenu editor={editor}  sendMessage={handleSendMessage} />}
 
         <EditorContent editor={editor} />
     </div>
