@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 // import Tiptap from '@/components/Tiptap'
 import Tiptap from "@/components/editor/Tiptap";
 
+
 // important that we use dynamic loading here
 // editorjs should only be rendered on the client side.
 const EditorBlock = dynamic(() => import("../../components/Editor"), {
@@ -71,10 +72,14 @@ const Home: NextPage = () => {
   }, [data]);
 
   return (
+  
     <div className="container max-w-4xl mt-24">
+     
       <Tiptap />
+      
       {/* <EditorBlock data={data} onChange={setData} holder="editorjs-container" /> */}
     </div>
+    
   );
 };
 

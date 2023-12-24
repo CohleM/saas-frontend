@@ -94,7 +94,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props: any) => {
 
 
   const handleOpenCard = () => {
-    props.editor.commands.deleteSelection()
+    // props.editor.commands.deleteSelection()
     setIsCardOpen(true);
   };
 

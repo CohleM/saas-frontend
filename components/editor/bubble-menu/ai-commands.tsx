@@ -26,11 +26,14 @@ import {DropdownMenuCheckboxes} from "@/components/ui/multiple-options"
 import { Checkbox } from "@/components/ui/checkbox"
 import {Icons } from "@/components/ui/circular-progress"
 
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import { createPortal } from 'react-dom'
 import { Portal } from "@headlessui/react";
+import { useStreamedContent } from "@/app/context/StreamedContent";
 
 export function CheckPortal({onClose}) {
+
+  const {streamedContent, setStreamedContent} = useStreamedContent();
 
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -40,6 +43,10 @@ export function CheckPortal({onClose}) {
     setIsSubmit(true)
    
   }
+
+  useEffect( () => {
+      console.log(streamedContent);
+  }, [streamedContent])
 
 
   return (

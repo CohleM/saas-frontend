@@ -15,7 +15,7 @@ import HardBreak from '@tiptap/extension-hard-break'
 import { Editor  } from "@tiptap/core";
 import useLocalStorage from "use-local-storage";
 import { useDebouncedCallback } from "use-debounce";
-
+import {useStreamedContent} from "@/app/context/StreamedContent" 
 
 interface IResponseObject {
   role: string;
@@ -36,11 +36,12 @@ const Tiptap = () => {
   const [data, setData] = useState('hi'); 
   const [eventSourceInitialized, setEventSourceInitialized] = useState(false);
   const [initialContent, setInitialContent] = useState('')
-  const [streamedContent, setStreamedContent] = useState('');
+  // const [streamedContent, setStreamedContent] = useState('');
   const [finalMessage, setFinalMessage] = useState('');
   const [localStorage, setLocalStorage] = useLocalStorage("Content", data);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const {streamedContent, setStreamedContent}  = useStreamedContent()
 
   const editor = useEditor({
     extensions: [
@@ -247,13 +248,14 @@ const Tiptap = () => {
         </button>
       </BubbleMenu>} */}
 
-      {editor && <EditorBubbleMenu editor={editor}  />}
+      {editor && <EditorBubbleMenu editor={editor}   />}
 
         <EditorContent editor={editor} />
     </div>
     
   )
 }
+
 
 export default Tiptap
 
