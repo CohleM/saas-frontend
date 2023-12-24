@@ -46,9 +46,9 @@ export function CheckPortal({onClose, sendMessage}) {
    
   }
 
-  useEffect( () => {
-      console.log(streamedContent);
-  }, [streamedContent])
+  // useEffect( () => {
+  //     console.log(streamedContent);
+  // }, [streamedContent])
 
 
   return (

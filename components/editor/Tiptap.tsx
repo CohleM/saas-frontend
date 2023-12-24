@@ -129,7 +129,7 @@ const Tiptap = () => {
         // editor.commands.setContent(initialContent + message['content'])
        //console.log('yeet', initialContent + message['content'])
         setStreamedContent(message['content'])
-
+        // editor.commands.insertContent(message['content'])
         if (message['finish_reason'] == 'stop') {
 
           setHoldEditing(false);
@@ -162,8 +162,8 @@ const Tiptap = () => {
           const { from, to } = editor.view.state.selection
           const text = editor?.view.state.doc.textBetween(from, to, '')
           
-          console.log('from', from, 'to', to)
-          console.log(text)
+          // console.log('from', from, 'to', to)
+          // console.log(text)
 
           setCursorIndex(to) 
           editor.commands.selectTextblockEnd()
@@ -174,10 +174,11 @@ const Tiptap = () => {
           // editor.commands.newlineInCode()
 
           editor.commands.insertContent('\n')
-          console.log(editor.getText())
+          // console.log(editor.getText())
           
           setStreamedContent('')
-          setInitialContent(editor.getText())
+          setInitialContent(editor.getHTML())
+          console.log(editor.getHTML())
           
           // editor.commands.insertContent('<h1> This is markdown</h1>') 
           // editor.commands.insertContent('<h1>Hello</h1><p>This is normal text</p>')
