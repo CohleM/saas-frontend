@@ -42,8 +42,6 @@ export function CheckPortal({onClose, sendMessage}) {
     onClose()
     setIsSubmit(true)
     sendMessage()
-
-   
   }
 
   // useEffect( () => {

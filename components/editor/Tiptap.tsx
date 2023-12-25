@@ -42,6 +42,11 @@ const Tiptap = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const {streamedContent, setStreamedContent}  = useStreamedContent()
+  const [cursorPos, setCursorPos] = useState(0);
+
+  const [previousContent, setPreviousContent] = useState('')
+
+
 
   const editor = useEditor({
     extensions: [
@@ -89,18 +94,34 @@ const Tiptap = () => {
   useEffect(() => {
   //  editor?.commands.setContent(initialContent + streamedContent)
       // console.log('initialcontent', initialContent)
-      editor?.commands.setContent(initialContent + streamedContent)
+      //editor?.commands.setContent(initialContent + streamedContent)
+      if (editor) {
+        const { from, to } = editor.view.state.selection
+
+        console.log(cursorPos, previousContent.length)
+        
+        
+
+        editor?.commands.deleteRange({
+          from: cursorPos,
+          to: cursorPos + previousContent.length,
+        })
+
+        editor?.commands.insertContent(streamedContent)
+
+        editor?.commands.setTextSelection({
+          from: cursorPos,
+          to: cursorPos + streamedContent.length,
+        })
+
+      }
+      
+
+
       // setInitialContent(initialContent + streamedContent)
 
   }, [initialContent, streamedContent])
   
-  // useEffect(() => {
-  //   //  editor?.commands.setContent(initialContent + streamedContent)
-  //       // console.log('initialcontent', initialContent)
-  //       editor?.commands.setContent(initialContent)
-  //       // setInitialContent(initialContent + streamedContent)
-  
-  //   }, [initialContent]) 
 
   //openai streaming response
   useEffect(() => {
@@ -115,19 +136,11 @@ const Tiptap = () => {
 
       const message = JSON.parse(e.data);
 
-      //console.log('backend ', message['content'])
-      
-      if (editor) {
+
+      if (editor) { 
         
-        // editor.commands.insertContent(message['content']) 
-        // editor.getText() 
-        // if (initialContent == '' ) {
-        //   setInitialContent(editor.getText())
-        // }
-        // console.log('this is initial content', initialContent) 
-        // setStreamedContent(message['content'])
-        // editor.commands.setContent(initialContent + message['content'])
-       //console.log('yeet', initialContent + message['content'])
+        setPreviousContent(streamedContent)
+
         setStreamedContent(message['content'])
         // editor.commands.insertContent(message['content'])
         if (message['finish_reason'] == 'stop') {
@@ -160,43 +173,38 @@ const Tiptap = () => {
 
         if (editor) {
           const { from, to } = editor.view.state.selection
+          setCursorPos(to)
           const text = editor?.view.state.doc.textBetween(from, to, '')
           
           // console.log('from', from, 'to', to)
           // console.log(text)
 
-          setCursorIndex(to) 
-          editor.commands.selectTextblockEnd()
-          editor.commands.splitBlock({ keepMarks: false })
-          // editor.commands.newlineInCode()
+          // const text1 = editor?.view.state.doc.nodesBetween(0, to)
+          // const text2 = editor?.view.state.doc.textBetween(to+1, editor.state.doc.content.size, '') 
+          // console.log(text1)  
+          // console.log(from, to)
+          // console.log(text2) 
+
+          // setCursorIndex(to) 
+          // editor.commands.selectTextblockEnd()
+          // editor.commands.splitBlock({ keepMarks: false })
+          editor.commands.newlineInCode()
           
           // editor.commands.insertContentAt(to,' ') 
           // editor.commands.newlineInCode()
 
-          editor.commands.insertContent('\n')
+          // editor.commands.insertContent('\n')
           // console.log(editor.getText())
           
-          setStreamedContent('')
-          setInitialContent(editor.getHTML())
-          console.log(editor.getHTML())
-          
-          // editor.commands.insertContent('<h1> This is markdown</h1>') 
-          // editor.commands.insertContent('<h1>Hello</h1><p>This is normal text</p>')
+          // setStreamedContent('')
+          // setInitialContent(editor.getHTML())
+          //console.log(editor.getHTML())
 
-          // split Node
-          // editor.commands.insertContent('# This is all good')
-          // editor.commands.splitBlock({ keepMarks: false })
-          // editor.commands.insertContent('This is paragraph') 
-
-
-          // editor.commands.insertContent('# This is all good \n This is a paragraph')
-
-          // editor.commands.setHardBreak()
-          // editor.commands.insertContent('<p>Normal text</p>')
-          
           socket.send(text);
           setHoldEditing(true);
-          
+        
+
+
         }
 
     }
@@ -231,27 +239,6 @@ const Tiptap = () => {
   return (
     <div>
         <Button onClick={sendMessage}> Click me</Button>
-
-        {/* {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-        <button
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive('bold') ? 'is-active' : ''}
-        >
-          bold
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive('italic') ? 'is-active' : ''}
-        >
-          italic
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleStrike().run()}
-          className={editor.isActive('strike') ? 'is-active' : ''}
-        >
-          strike
-        </button>
-      </BubbleMenu>} */}
 
       {editor && <EditorBubbleMenu editor={editor}  sendMessage={handleSendMessage} />}
 
