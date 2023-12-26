@@ -534,27 +534,27 @@ const Tiptap = () => {
 
   return (
     <div> 
-      <div className="h-10 top-0 bg-slate-500 left-0 fixed w-full z-20">
+      <div className="h-15 top-0 bg-slate-500 left-0 fixed w-full z-20">
         <Button onClick={handleSidebar}> </Button>
       </div>
 
     
-    <div className="flex gap-x-4 mt-10 py-4">
+    <div className="flex gap-x-4 py-4">
         
-        {toggleSidebar && <div className="w-1/3 border"> 
+        {toggleSidebar && <div className="w-1/3  mt-10"> 
 
             GG
         
         </div>
         }
-      <div className="w-full overflow-y-auto mx-10">
+      <div className="w-full overflow-y-auto mx-10 mt-10">
       {editor && <EditorBubbleMenu editor={editor}  sendMessage={handleSendMessage} />}
 
         <EditorContent editor={editor} />
 
         </div>
 
-        <div className="sticky top-0 w-1/2 h-100 border h-screen overflow-y-auto border-1 border-solid border-gray-300 p-4"> <div> <CheckPortal sendMessage={handleSendMessage}> </CheckPortal>
+        <div className=" sticky top-0 w-1/2  h-screen overflow-y-auto border-l border-solid border-gray-300 p-4"> <div> <CheckPortal sendMessage={handleSendMessage}> </CheckPortal>
 
         {/* <div dangerouslySetInnerHTML={{ __html: streamedContent }}></div> */}
         <ReactMarkdown  

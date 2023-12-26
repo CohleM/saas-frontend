@@ -52,7 +52,7 @@ export function CheckPortal({sendMessage}) {
     //fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50
 // w-1/2 z-50 absolute top-0 left-0
 
-    <div> 
+    <div className="mt-10"> 
       
 
     <Card>
