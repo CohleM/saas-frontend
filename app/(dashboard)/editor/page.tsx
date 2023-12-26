@@ -71,7 +71,7 @@ const Home: NextPage = () => {
 
   return (
   
-    <div className="mt-24">
+    <div className="">
      
       <Tiptap />
       

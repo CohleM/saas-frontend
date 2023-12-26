@@ -274,7 +274,7 @@ import Blockquote from "@tiptap/extension-blockquote";
 import { Converter } from 'showdown';
 import {  CheckPortal } from "./bubble-menu/ai-commands";
 import ReactMarkdown from 'react-markdown';
-
+import { Plus, MessageSquare, User2, Bot, SendHorizontal } from "lucide-react";
 
 interface IResponseObject {
   role: string;
@@ -309,6 +309,7 @@ const Tiptap = () => {
   const prev = useRef("");
 
   const [previousStreamedContent, setPreviousStreamedContent] = useState('');
+  const [editorWidth, setEditorWidth] = useState('500px');
 
   useEffect(() => {
     setPreviousStreamedContent(streamedContent);
@@ -338,7 +339,7 @@ const Tiptap = () => {
     content: data,
     editorProps: {
         attributes: {
-          class: 'prose dark:prose-invert prose-sm sm:prose-base lg:prose-base xl:prose-base m-5 focus:outline-none',
+          class: 'max-w-full prose dark:prose-invert prose-sm sm:prose-base lg:prose-base xl:prose-base m-5 focus:outline-none',
         },
       }
       ,
@@ -351,6 +352,8 @@ const Tiptap = () => {
     sendMessage(); // Send message through the WebSocket connection
   };
   
+
+  // tiptap ProseMirror prose-invert prose-headings:font-title focus:outline-none [&:focus-visible]:outline-none max-w-full
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     const json_text = editor.getJSON();
@@ -487,11 +490,64 @@ const Tiptap = () => {
   }, [holdEditing])
   
 
+
+  let chatTitles = [
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    {
+      id: 5,
+      title: "hugginface ",
+    },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+    { id: 1, title: "Some chat" },
+    { id: 2, title: "OpenAI is awesome" },
+    { id: 3, title: "Anthropic" },
+    { id: 4, title: "Phind is for coding" },
+  ];
+
+  const [toggleSidebar, setToggleSidebar] = useState(true);
+
+  const handleSidebar = () => {
+      setToggleSidebar(!toggleSidebar)
+      
+  }
+
+
+
   return (
-    <div className="flex gap-x-4">
+    <div> 
+      <div className="h-10 top-0 bg-slate-500 left-0 fixed w-full z-20">
+        <Button onClick={handleSidebar}> </Button>
+      </div>
+
+    
+    <div className="flex gap-x-4 mt-10 py-4">
         
-        <div className="w-1/3 border"> Drafts</div>
-      <div className="w-full overflow-y-auto">
+        {toggleSidebar && <div className="w-1/3 border"> 
+
+            GG
+        
+        </div>
+        }
+      <div className="w-full overflow-y-auto mx-10">
       {editor && <EditorBubbleMenu editor={editor}  sendMessage={handleSendMessage} />}
 
         <EditorContent editor={editor} />
@@ -541,6 +597,7 @@ const Tiptap = () => {
         </div> 
         </div>
         
+    </div>
     </div>
     
   )
