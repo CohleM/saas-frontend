@@ -11,9 +11,7 @@ import Tiptap from "@/components/editor/Tiptap";
 
 // important that we use dynamic loading here
 // editorjs should only be rendered on the client side.
-const EditorBlock = dynamic(() => import("../../components/Editor"), {
-  ssr: false,
-});
+
 
 const Home: NextPage = () => {
   var sample_data =    {

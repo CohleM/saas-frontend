@@ -57,11 +57,11 @@ export default function RootLayout({
         <script src="https://accounts.google.com/gsi/client" async></script>
       </head>
       <body className={inter.className}>
-          <StreamedContentProvider> 
-          <NavBar />
+          
+          {/* <NavBar /> */}
           {children}
           <div id="portal" />
-          </StreamedContentProvider>
+          
 
       </body>
     </html>

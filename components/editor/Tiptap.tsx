@@ -360,40 +360,7 @@ const Tiptap = () => {
 
   
 
-  useEffect(() => {
-  //  editor?.commands.setContent(initialContent + streamedContent)
-      // console.log('initialcontent', initialContent)
-      //editor?.commands.setContent(initialContent + streamedContent)
-      if (editor) {
-        
-        // const output = converter.makeHtml(streamedContent);
-        
-        // editor?.commands.deleteRange({
-        //   from: cursorPos,
-        //   to: cursorPos + previousStreamedContent.length, 
-        // })
 
-        // //console.log(output)
-        // editor?.commands.insertContent(output)
-
-
-        // editor?.commands.setTextSelection({
-        //   from: cursorPos,
-        //   to: cursorPos + streamedContent.length,
-        // })
-
-        
-        // console.log(cursorPos, previousStreamedContent.length)
-
-        // const diff = streamedContent.slice(prev.current.length);
-        // prev.current = streamedContent;
-        // editor?.commands.insertContent(diff);
-
-      }
-      
-
-
-  }, [initialContent, streamedContent])
   
 
   //openai streaming response
@@ -531,7 +498,7 @@ const Tiptap = () => {
 
         </div>
 
-        <div className=" w-1/2 h-100 border h-screen overflow-y-auto border-1 border-solid border-gray-300 p-4"> <div> <CheckPortal> </CheckPortal>
+        <div className=" w-1/2 h-100 border h-screen overflow-y-auto border-1 border-solid border-gray-300 p-4"> <div> <CheckPortal sendMessage={handleSendMessage}> </CheckPortal>
 
         {/* <div dangerouslySetInnerHTML={{ __html: streamedContent }}></div> */}
         <ReactMarkdown  

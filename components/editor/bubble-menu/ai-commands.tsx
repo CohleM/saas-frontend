@@ -31,16 +31,15 @@ import { createPortal } from 'react-dom'
 import { Portal } from "@headlessui/react";
 import { useStreamedContent } from "@/app/context/StreamedContent";
 
-export function CheckPortal({onClose, sendMessage}) {
+export function CheckPortal({sendMessage}) {
 
   const {streamedContent, setStreamedContent} = useStreamedContent();
 
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleSubmit = () => {
-    console.log('yay')
-    onClose()
-    setIsSubmit(true)
+    // console.log('yay')
+    // setIsSubmit(true)
     sendMessage()
   }
 
@@ -131,8 +130,8 @@ export function CheckPortal({onClose, sendMessage}) {
         
       </CardContent>
       <CardFooter className="justify-between space-x-2">
-        <Button variant="ghost" onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit} >Submit</Button>
+        {/* <Button variant="ghost" onClick={onClose}>Cancel</Button> */}
+        <Button onClick={handleSubmit} size="sm" className="w-full">Generate </Button>
       </CardFooter>
       </div>
         }
