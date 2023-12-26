@@ -489,16 +489,16 @@ const Tiptap = () => {
 
   return (
     <div className="flex gap-x-4">
-        <Button onClick={sendMessage}> Click me</Button>
+        
         <div className="w-1/3 border"> Drafts</div>
-      <div className="w-full">
+      <div className="w-full overflow-y-auto">
       {editor && <EditorBubbleMenu editor={editor}  sendMessage={handleSendMessage} />}
 
         <EditorContent editor={editor} />
 
         </div>
 
-        <div className=" w-1/2 h-100 border h-screen overflow-y-auto border-1 border-solid border-gray-300 p-4"> <div> <CheckPortal sendMessage={handleSendMessage}> </CheckPortal>
+        <div className="sticky top-0 w-1/2 h-100 border h-screen overflow-y-auto border-1 border-solid border-gray-300 p-4"> <div> <CheckPortal sendMessage={handleSendMessage}> </CheckPortal>
 
         {/* <div dangerouslySetInnerHTML={{ __html: streamedContent }}></div> */}
         <ReactMarkdown  

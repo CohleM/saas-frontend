@@ -60,9 +60,7 @@ export function CheckPortal({sendMessage}) {
     {!isSubmit  && <div> 
       <CardHeader>
         <CardTitle>AI Commands</CardTitle>
-        <CardDescription>
-          Select options that you want to use
-        </CardDescription>
+
       </CardHeader>
       <CardContent className="grid gap-6">
 
