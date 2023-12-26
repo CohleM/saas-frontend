@@ -73,7 +73,7 @@ const Home: NextPage = () => {
 
   return (
   
-    <div className="container max-w-4xl mt-24">
+    <div className="mt-24">
      
       <Tiptap />
       

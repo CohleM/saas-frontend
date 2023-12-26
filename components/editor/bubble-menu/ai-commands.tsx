@@ -56,7 +56,7 @@ export function CheckPortal({onClose, sendMessage}) {
     <div> 
       
 
-    <Card className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 border border-gray-500 border-solid shadow-xl p-4 ">
+    <Card>
       
     {!isSubmit  && <div> 
       <CardHeader>
