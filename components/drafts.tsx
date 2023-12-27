@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import {File, Plus, LogOut, Sparkles} from "lucide-react";
 import { ScrollArea
  } from './ui/scroll-area';
-const drafts = () => {
+const drafts = ({contentChange} : {contentChange : ()=> void }) => {
 
 
  const playlists = [
@@ -28,9 +28,9 @@ const drafts = () => {
             <Button className='w-full' >AI is fascinating</Button>
             <Button className='w-full' >AI is fascinating</Button> */}
 
-<ScrollArea className="h-[calc(100vh-theme(space.40))] px-1 ">
+<ScrollArea className="h-[calc(100vh-15rem)] px-1 ">
             <div className="space-y-1 p-2">
-            <Button className="space-x-4 w-full justify-start" variant="ghost">
+            <Button className="space-x-4 w-full justify-start" variant="ghost" onClick={contentChange}>
             <Plus className="mx-2 w-4 h-4" />
             New document
           </Button>

@@ -99,6 +99,16 @@ const Tiptap = () => {
     sendMessage(); // Send message through the WebSocket connection
   };
   
+  const handleContent = () => {
+    setData('gggg')
+    console.log('yooo change content')
+  }
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(data);
+    }
+  }, [data, editor]);
 
   // tiptap ProseMirror prose-invert prose-headings:font-title focus:outline-none [&:focus-visible]:outline-none max-w-full
 
@@ -108,10 +118,6 @@ const Tiptap = () => {
     setLocalStorage(json_text)
   }, 1000);
 
-  
-
-
-  
 
   //openai streaming response
   useEffect(() => {
@@ -123,22 +129,12 @@ const Tiptap = () => {
     };
   
     ws.onmessage = (e) => {
-
       const message = JSON.parse(e.data);
-
 
       if (editor) { 
         
-        // setStreamedContent(message['content'])
-        // const output = converter.makeHtml(message['content']);
         setStreamedContent(message['content'])
-
         console.log(message['content'])
-        // console.log(output)
-
-        
-        // prev.current = message['content'] 
-        // editor.commands.insertContent(message['content'])
         if (message['finish_reason'] == 'stop') {
 
           setHoldEditing(false);
@@ -162,49 +158,12 @@ const Tiptap = () => {
   const sendMessage = () => {
     
     if(socket){
-
-
-        // editor?.commands.
-        // console.log('fron frontend :', inputValue)
-
         if (editor) {
           const { from, to } = editor.view.state.selection
           setCursorPos(to)
           const text = editor?.view.state.doc.textBetween(from, to, '')
-         
-          
-          //console.log(previousContent, previousContent.length)
-          // console.log('from', from, 'to', to)
-          // console.log(text)
-
-          // const text1 = editor?.view.state.doc.nodesBetween(0, to)
-          // const text2 = editor?.view.state.doc.textBetween(to+1, editor.state.doc.content.size, '') 
-          // console.log(text1)  
-          // console.log(from, to)
-          // console.log(text2) 
-
-          // setCursorIndex(to) 
-          // editor.commands.selectTextblockEnd()
-          // editor.commands.splitBlock({ keepMarks: false })
-          // editor.commands.newlineInCode()
-          
-          // editor.commands.insertContentAt(to,' ') 
-          // editor.commands.newlineInCode()
-
-          // editor.commands.insertContent('\n')
-          // console.log(editor.getText())
-          
-          // setStreamedContent('')
-          // setInitialContent(editor.getHTML())
-          //console.log(editor.getHTML())
-
-
-          // editor.commands.setTextSelection({from: 100, to:120})
           socket.send(text);
           setHoldEditing(true);
-          // editor.commands.insertContent('<h1>Example Text</h1>')
-        
-
 
         }
 
@@ -238,37 +197,7 @@ const Tiptap = () => {
   
 
 
-  let chatTitles = [
-    { id: 1, title: "Some chat" },
-    { id: 2, title: "OpenAI is awesome" },
-    { id: 3, title: "Anthropic" },
-    { id: 4, title: "Phind is for coding" },
-    {
-      id: 5,
-      title: "hugginface ",
-    },
-    { id: 1, title: "Some chat" },
-    { id: 2, title: "OpenAI is awesome" },
-    { id: 3, title: "Anthropic" },
-    { id: 4, title: "Phind is for coding" },
-    { id: 1, title: "Some chat" },
-    { id: 2, title: "OpenAI is awesome" },
-    { id: 3, title: "Anthropic" },
-    { id: 4, title: "Phind is for coding" },
-    { id: 1, title: "Some chat" },
-    { id: 2, title: "OpenAI is awesome" },
-    { id: 3, title: "Anthropic" },
-    { id: 4, title: "Phind is for coding" },
-    { id: 4, title: "Phind is for coding" },
-    { id: 1, title: "Some chat" },
-    { id: 2, title: "OpenAI is awesome" },
-    { id: 3, title: "Anthropic" },
-    { id: 4, title: "Phind is for coding" },
-    { id: 1, title: "Some chat" },
-    { id: 2, title: "OpenAI is awesome" },
-    { id: 3, title: "Anthropic" },
-    { id: 4, title: "Phind is for coding" },
-  ];
+
 
   const [toggleSidebar, setToggleSidebar] = useState(true);
 
@@ -286,8 +215,8 @@ const Tiptap = () => {
     
     <div className="flex gap-x-4 py-4 ">
         
-        {toggleSidebar && <div className="sticky top-10 w-1/3 h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
-        <Drafts />
+        {toggleSidebar && <div className="sticky top-0 w-1/3 h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
+        <Drafts contentChange={handleContent} />
 
         </div>
         }
@@ -303,37 +232,7 @@ const Tiptap = () => {
         {/* <div dangerouslySetInnerHTML={{ __html: streamedContent }}></div> */}
         <ReactMarkdown  
         
-  //       components={{
-	//   h1: ({ node, ...props }) => (
-	//     <h1 className="font-bold text-2xl" {...props} />
-	//   ),
-  //   h2: ({ node, ...props }) => (
-	//     <h1 className="font-bold text-xl" {...props} />
-	//   ),
-  //   h3: ({ node, ...props }) => (
-	//     <h1 className="font-bold text-xl" {...props} />
-	//   ),
-	//   ul: ({ node, ...props }) => (
-	//     <ul
-	//       style={{
-	//         display: "block",
-	//         listStyleType: "disc",
-	//         paddingInlineStart: "40px",
-	//       }}
-	//       {...props}
-	//     />
-	//   ),
-	//   ol: ({ node, ...props }) => (
-	//     <ol
-	//       style={{
-	//         display: "block",
-	//         listStyleType: "decimal",
-	//         paddingInlineStart: "40px",
-	//       }}
-	//       {...props}
-	//     />
-	//   ),
-	// }} 
+
 
   className="prose"
   
