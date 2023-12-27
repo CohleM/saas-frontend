@@ -286,7 +286,7 @@ const Tiptap = () => {
     
     <div className="flex gap-x-4 py-4 ">
         
-        {toggleSidebar && <div className="sticky top-0 w-1/3  h-screen overflow-y-auto border-l border-solid border-gray-50000"> 
+        {toggleSidebar && <div className="sticky top-10 w-1/3 h-screen overflow-y-auto border-l border-solid border-gray-50000"> 
         <Drafts />
 
         </div>
