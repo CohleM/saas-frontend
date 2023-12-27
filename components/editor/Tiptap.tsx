@@ -275,6 +275,7 @@ import { Converter } from 'showdown';
 import {  CheckPortal } from "./bubble-menu/ai-commands";
 import ReactMarkdown from 'react-markdown';
 import { Plus, MessageSquare, User2, Bot, SendHorizontal } from "lucide-react";
+import DashboardNavbar from "@/components/dashboard-nav"
 
 interface IResponseObject {
   role: string;
@@ -534,10 +535,8 @@ const Tiptap = () => {
 
   return (
     <div> 
-      <div className="h-15 top-0 bg-slate-500 left-0 fixed w-full z-20">
-        <Button onClick={handleSidebar}> </Button>
-      </div>
 
+    <DashboardNavbar draftsBar={handleSidebar}/>
     
     <div className="flex gap-x-4 py-4">
         
