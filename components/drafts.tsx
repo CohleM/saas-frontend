@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from "@/components/ui/button";
-import {File, Plus} from "lucide-react";
+import {File, Plus, LogOut, Sparkles} from "lucide-react";
 import { ScrollArea
  } from './ui/scroll-area';
 const drafts = () => {
@@ -15,26 +15,25 @@ const drafts = () => {
         "Logic Discography",
         "Bedtime Beats",
         "Feeling Happy",
-        "I miss Y2K Pop",
+
 
       ]
 
   return (
-    <div className=''>
-        <div className='pt-10'>
+    <div className='mt-10 '>
+        <div className='flex flex-col items-center '>
             {/* <p className='text-base font-bold mt-5'> Drafts</p>
             <Button className='w-full' >AI is fascinating</Button>
             <Button className='w-full' >AI is fascinating</Button>
             <Button className='w-full' >AI is fascinating</Button>
             <Button className='w-full' >AI is fascinating</Button> */}
 
-<ScrollArea className="h-[calc(100vh-theme(space.40))] px-1">
-        
-        <Button className="mx-4 space-x-4 " variant="outline">
-            <Plus className="mx-2 w-4 h-4" />
-            New Chat
-          </Button>
+<ScrollArea className="h-[calc(100vh-theme(space.40))] px-1 ">
             <div className="space-y-1 p-2">
+            <Button className="space-x-4 w-full justify-start" variant="ghost">
+            <Plus className="mx-2 w-4 h-4" />
+            New document
+          </Button>
               {playlists?.map((playlist, i) => (
                 <Button
                   key={`${playlist}-${i}`}
@@ -47,8 +46,10 @@ const drafts = () => {
               ))}
             </div>
           </ScrollArea>
-
-
+          <div className='flex flex-col w-full bg-white px-2 space-y-2'>
+          <Button variant="outline" className='w-full justify-center' size="sm"><LogOut className="w-4 h-4 mx-2"/> Log out</Button>
+          <Button variant="outline" className='w-full bg-purple-500 text-white' size="sm"><Sparkles className="w-4 h-4 mx-2" />Upgrade</Button>
+          </div>
                    </div>
     </div>
   )
