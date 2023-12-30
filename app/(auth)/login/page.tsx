@@ -24,6 +24,8 @@ interface SubmitEmailResponse {
 export default function Login() {
 
   const [email, setEmail] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
+
   const handleEmailChange = (e:  ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value)
   } 
@@ -42,6 +44,8 @@ export default function Login() {
 
         if (response.ok) {
           const data: SubmitEmailResponse = await response.json();
+          setResponseMessage(data.message); // Update the response message state
+          setEmail('');
           // Handle successful response
           console.log(data.message);
           alert(data.message);
@@ -93,7 +97,11 @@ export default function Login() {
         </div> */}
       </CardContent>
       <CardFooter>
+        <div className='flex flex-col space-y-4 w-full'> 
         <Button className="w-full" onClick={handleLogin}>Login</Button>
+        {responseMessage && <div className='w-full bg-green-200 p-4 rounded'><p className="text-green-500 text-base">{responseMessage}</p></div>}
+        </div>
+        {/* {responseMessage && <p className="text-green-500">{responseMessage}</p>} */}
       </CardFooter>
     </Card>
     </div>
