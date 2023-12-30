@@ -2,13 +2,14 @@
 // MagicLinkPage.tsx
 
 import { useEffect } from 'react';
-import { redirect, useSearchParams } from 'next/navigation';
+import { useRouter, redirect, useSearchParams } from 'next/navigation';
 
 const MagicLinkPage: React.FC = () => {
   const searchParams = useSearchParams()
 
   const token = searchParams.get('token') 
   console.log(token)
+  const { push } = useRouter();
 
   useEffect(() => {
 
@@ -37,7 +38,7 @@ const MagicLinkPage: React.FC = () => {
             // console.log(output)
             if (output['isValid'] == 'true') {
                 console.log(output['message'])
-                redirect('http://localhost:3000/editor')
+                push('http://localhost:3000/editor')
             } 
             else{
               console.log(output['message'])
