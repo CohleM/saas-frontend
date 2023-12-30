@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
+import { CheckCircle } from 'lucide-react';
 interface SubmitEmailRequest {
   email: string;
 }
@@ -99,7 +99,7 @@ export default function Login() {
       <CardFooter>
         <div className='flex flex-col space-y-4 w-full'> 
         <Button className="w-full" onClick={handleLogin}>Login</Button>
-        {responseMessage && <div className='w-full bg-green-200 p-4 rounded'><p className="text-green-500 text-base">{responseMessage}</p></div>}
+        {responseMessage && <div className='w-full bg-green-200 p-4 rounded flex space-x-2'><CheckCircle className='w-4 h-4 text-green-600'/> <div className='flex space-x-2'> </div><p className="text-green-500 text-sm">{responseMessage}</p></div>}
         </div>
         {/* {responseMessage && <p className="text-green-500">{responseMessage}</p>} */}
       </CardFooter>
