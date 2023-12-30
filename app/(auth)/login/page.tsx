@@ -1,5 +1,5 @@
 "use client"
-
+import { useState, ChangeEvent} from 'react'
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,7 +13,49 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+interface SubmitEmailRequest {
+  email: string;
+}
+
+interface SubmitEmailResponse {
+  message: string;
+}
+
 export default function Login() {
+
+  const [email, setEmail] = useState('');
+  const handleEmailChange = (e:  ChangeEvent<HTMLInputElement>) => {
+      setEmail(e.target.value)
+  } 
+  
+  const handleLogin = async () => {
+      const requestBody: SubmitEmailRequest = { 'email' : email }
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/magic-link/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (response.ok) {
+          const data: SubmitEmailResponse = await response.json();
+          // Handle successful response
+          console.log(data.message);
+          alert(data.message);
+
+        } else {
+          // Handle errors
+          console.error('Request failed');
+        }
+
+      }
+      catch(error) {
+          console.error('An error occurred:', error);
+      }
+  }
   return (
     <div className="flex justify-center items-center mt-24">
     <Card className="w-96">
@@ -43,15 +85,15 @@ export default function Login() {
         </div>
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" />
+          <Input id="email" type="email" placeholder="m@example.com" onChange={handleEmailChange}/>
         </div>
-        <div className="grid gap-2">
+        {/* <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
           <Input id="password" type="password" />
-        </div>
+        </div> */}
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Login</Button>
+        <Button className="w-full" onClick={handleLogin}>Login</Button>
       </CardFooter>
     </Card>
     </div>

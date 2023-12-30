@@ -100,7 +100,7 @@ const Tiptap = () => {
   };
   
   const handleContent = () => {
-    setData('gggg')
+    setData('<h1> haha this is cool</h1> <p> yes this is fine</p>')
     console.log('yooo change content')
   }
 
