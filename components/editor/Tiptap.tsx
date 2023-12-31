@@ -106,6 +106,7 @@ const Tiptap = () => {
 
   useEffect(() => {
     if (editor) {
+
       editor.commands.setContent(data);
     }
   }, [data, editor]);
@@ -116,6 +117,7 @@ const Tiptap = () => {
     const json_text = editor.getJSON();
     // const json_text = editor.getText();
     setLocalStorage(json_text)
+    
   }, 1000);
 
 

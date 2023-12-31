@@ -13,7 +13,7 @@ const MagicLinkPage: React.FC = () => {
   const searchParams = useSearchParams()
 
   const token = searchParams.get('token') 
-  console.log(token)
+  
   const { push } = useRouter();
 
   useEffect(() => {
@@ -37,23 +37,33 @@ const MagicLinkPage: React.FC = () => {
 
         try {
           const response = await fetch(`http://127.0.0.1:8000/token/${token}`)
-
+          
           if (response.ok) {
             const output = await response.json()
             // console.log(output)
             if (output) {
+                console.log('gggggg')
                 setLocalStorage(output['access_token'])
-                console.log(output)
+                // console.log(output)
                 push('http://localhost:3000/editor')
             } 
             else{
-              console.log(output)
+              // console.log(output)
+              console.log('yolo')
             }
           }
         }
-
-        catch (error) {
-          console.error(error)
+        catch(error) {
+          // if (error.response && error.response.status === 401) {
+          //   console.log('401 Unauthorized');
+          //   // Handle the 401 Unauthorized error here
+          //   // For example, redirect the user to a login page
+          //   // or display an error message
+          //   console.log('there was gg errror')
+          // } else {
+          //   console.error('Error verifying magic link:', error);
+          // }
+          console.error('error')
         }
       }
 
