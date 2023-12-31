@@ -108,36 +108,5 @@ export default function Login() {
 
 
 
-    //only the social login
-
-    // <div className="flex justify-center items-center mt-24">
-    // <Card className="w-96">
-    //   <CardHeader className="flex flex-col space-y-1 justify-center items-center">
-    //     <CardTitle className="text-2xl">Log in to OkProfessor</CardTitle>
-    //     <CardDescription>
-    //     Login to continue
-    //     </CardDescription>
-    //   </CardHeader>
-    //   <CardContent className="grid gap-4">
-    //     <div className="">
-          
-    //       <Button variant="default" className="w-full">
-    //         <Icons.google className="mr-2 h-4 w-4" />
-    //         Continue with Google
-    //       </Button>
-          
-
-    //       <div className="flex space-x-3 mt-4 justify-evenly">
-    //         <p>
-    //           <span className="text-sm text-muted-foreground" >Don't have an account?</span> 
-    //           <span> <a href="/signup" className="text-sm font-medium">Create Account </a> </span> </p>
-           
-    //       </div>
-    //     </div>
-
-    //   </CardContent>
-
-    // </Card>
-    // </div>
   )
 }

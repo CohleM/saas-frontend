@@ -3,8 +3,13 @@
 
 import { useEffect } from 'react';
 import { useRouter, redirect, useSearchParams } from 'next/navigation';
+import useLocalStorage from "use-local-storage";
 
 const MagicLinkPage: React.FC = () => {
+
+  const [localStorage, setLocalStorage] = useLocalStorage("access_token", '');
+
+
   const searchParams = useSearchParams()
 
   const token = searchParams.get('token') 
@@ -36,12 +41,13 @@ const MagicLinkPage: React.FC = () => {
           if (response.ok) {
             const output = await response.json()
             // console.log(output)
-            if (output['isValid'] == 'true') {
-                console.log(output['message'])
+            if (output) {
+                setLocalStorage(output['access_token'])
+                console.log(output)
                 push('http://localhost:3000/editor')
             } 
             else{
-              console.log(output['message'])
+              console.log(output)
             }
           }
         }
