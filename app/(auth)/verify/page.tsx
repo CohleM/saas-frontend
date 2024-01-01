@@ -8,7 +8,8 @@ const YourComponent = () => {
 
   useEffect(() => {
     // Replace 'your-backend-endpoint' with the actual backend API endpoint
-    const apiUrl = `http://127.0.0.1:8000/private-data`;
+    // const apiUrl = `http://127.0.0.1:8000/private-data`;
+     const apiUrl = `http://127.0.0.1:8000/create-draft`;
 
     const fetchData = async () => {
       try {
@@ -25,7 +26,7 @@ const YourComponent = () => {
         if (response.ok) {
           const result = await response.json();
           setData(result);
-          console.log(result)
+          console.log('this is result', result)
         } else {
           console.error('Error:', response.statusText);
         }
