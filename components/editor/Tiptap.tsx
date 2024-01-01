@@ -122,10 +122,43 @@ const Tiptap = () => {
   // tiptap ProseMirror prose-invert prose-headings:font-title focus:outline-none [&:focus-visible]:outline-none max-w-full
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
-    const json_text = editor.getJSON();
+    const html_text = editor.getHTML();
     // const json_text = editor.getText();
-    setLocalStorage(json_text)
+    setLocalStorage(html_text)
 
+    const token = accesstoken 
+    const fetchData = async () => {
+
+      // console.log(html_text)
+    try {
+      const editDraftResponse = await fetch(`http://127.0.0.1:8000/edit-draft/${activeDraft}/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json', // Adjust the content type as needed
+      },
+      body: JSON.stringify({
+        text: html_text,
+      }), 
+    })
+
+      if (editDraftResponse.ok) {
+        const editedDraftResult = await editDraftResponse.json()
+        console.log('this is draftResult', editedDraftResult)
+        //setData(draftResult['text'])
+      }
+      else {
+        console.log('error occured')
+      }
+    }
+    catch (error) {
+      console.error(error)
+    }
+    }
+
+    fetchData()
+
+    //send the update update request to the backend.
   }, 1000);
 
 
