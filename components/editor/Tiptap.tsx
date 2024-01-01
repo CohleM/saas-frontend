@@ -28,6 +28,19 @@ interface IResponseObject {
   content: string;
 }
 
+type Draft = {
+  id: number;
+  name: string;
+  owner_id: number;
+  last_updated: string; // You might want to use a Date type if applicable
+};
+
+type UserData = {
+  email: string;
+  id: number;
+  drafts: Draft[];
+};
+
 
 const Tiptap = () => {
 
@@ -59,12 +72,11 @@ const Tiptap = () => {
   const [editorWidth, setEditorWidth] = useState('500px');
 
 
-  const [userdata, setUserData] = useState(null);
+  const [userdata, setUserData] = useState<UserData | null>();
   const [accesstoken, setAccessToken] = useLocalStorage("access_token",'');
   const [activeDraft, setActiveDraft] = useState(null);
 
-
-
+  const [drafts, setDrafts] = useState<Draft[]>();
 
 
   useEffect(() => {
@@ -289,10 +301,12 @@ const Tiptap = () => {
         if (response.ok) {
           const result = await response.json();
           setUserData(result);
-          // console.log('hehe', result)
+          console.log('hehe', result)
           //sort the result
           const all_drafts = result['drafts']
-          console.log(all_drafts[0])
+          console.log('all draft',all_drafts)
+
+          setDrafts(all_drafts)
           const last_active_draft = all_drafts[0]['id']
           console.log(last_active_draft)
           setActiveDraft(last_active_draft)
@@ -332,8 +346,8 @@ const Tiptap = () => {
     
     <div className="flex gap-x-4 py-4 ">
         
-        {toggleSidebar && <div className="sticky top-0 w-1/3 h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
-        <Drafts contentChange={handleContent} />
+        {toggleSidebar && drafts && <div className="sticky top-0 w-1/3 h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
+        <Drafts contentChange={handleContent} drafts={drafts} />
 
         </div>
         }

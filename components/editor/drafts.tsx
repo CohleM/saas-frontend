@@ -3,7 +3,25 @@ import { Button } from "@/components/ui/button";
 import {File, Plus, LogOut, Sparkles} from "lucide-react";
 import { ScrollArea
  } from '../ui/scroll-area';
-const drafts = ({contentChange} : {contentChange : ()=> void }) => {
+ import { useEffect } from 'react';
+
+ type Draft = {
+  id: number;
+  name: string;
+  owner_id: number;
+  last_updated: string; // You might want to use a Date type if applicable
+};
+
+type UserData = {
+  email: string;
+  id: number;
+  drafts: Draft[];
+};
+
+
+
+const drafts = ({contentChange, drafts} : {contentChange : ()=> void, drafts: Draft[]}) => {
+
 
 
  const playlists = [
@@ -15,9 +33,16 @@ const drafts = ({contentChange} : {contentChange : ()=> void }) => {
         "Logic Discography",
         "Bedtime Beats",
         "Feeling Happy",
-
-
       ]
+
+      console.log(drafts)
+  
+     
+      // console.log(Object.entries(userdata['drafts']));
+      
+      
+
+      
 
   return (
     <div className='mt-10 '>
@@ -34,14 +59,14 @@ const drafts = ({contentChange} : {contentChange : ()=> void }) => {
             <Plus className="mx-2 w-4 h-4" />
             New document
           </Button>
-              {playlists?.map((playlist, i) => (
+              {drafts?.map((item, i) => (
                 <Button
-                  key={`${playlist}-${i}`}
+                  key={`${item}-${i}`}
                   variant="ghost"
                   className="w-full justify-start font-normal"
                 >
                     <File className='h-4 w-4 mx-2'/>
-                  {playlist}
+                  {item.name}
                 </Button>
               ))}
             </div>
