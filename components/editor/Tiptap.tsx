@@ -22,7 +22,7 @@ import {  CheckPortal } from "./bubble-menu/ai-commands";
 import ReactMarkdown from 'react-markdown';
 import { Plus, MessageSquare, User2, Bot, SendHorizontal } from "lucide-react";
 import DashboardNavbar from "@/components/dashboard-nav"
-import Drafts from "@/components/drafts"
+import Drafts from "@/components/editor/drafts"
 interface IResponseObject {
   role: string;
   content: string;
@@ -39,7 +39,7 @@ const Tiptap = () => {
   const [msg, setMsg] = useState<string>('')
   const [cursorIndex, setCursorIndex] = useState(0);
 
-  const [data, setData] = useState('hi'); 
+  const [data, setData] = useState(''); 
   const [eventSourceInitialized, setEventSourceInitialized] = useState(false);
   const [initialContent, setInitialContent] = useState('')
   const [streamedContent, setStreamedContent] = useState('');
@@ -206,37 +206,70 @@ const Tiptap = () => {
 
   }, [holdEditing])
   
-  // //verify the access_token that is in the localStorage
-  // useEffect(() => {
-  //   // Replace 'your-backend-endpoint' with the actual backend API endpoint
-  //   const apiUrl = `http://127.0.0.1:8000/private-data`;
+  //verify the access_token that is in the localStorage
+  useEffect(() => {
+    // Replace 'your-backend-endpoint' with the actual backend API endpoint
+    const apiUrl = `http://127.0.0.1:8000/userinfo`;
 
-  //   const fetchData = async () => {
-  //     try {
-  //       const token = accesstoken; // Replace with your actual bearer token
+    const fetchData = async () => {
+      try {
+        const token = accesstoken; // Replace with your actual bearer token
 
-  //       const response = await fetch(apiUrl, {
-  //         method: 'GET',
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           'Content-Type': 'application/json', // Adjust the content type as needed
-  //         },
-  //       });
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json', // Adjust the content type as needed
+          },
+        });
 
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setUserData(result);
-  //         console.log(result)
-  //       } else {
-  //         console.error('Error:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //     }
-  //   };
+        if (response.ok) {
+          const result = await response.json();
+          setUserData(result);
+          // console.log('hehe', result)
+          //sort the result
+          const all_drafts = result['drafts']
+          console.log(all_drafts[0])
+          const last_active_draft = all_drafts[0]['id']
+          console.log(last_active_draft)
+          
+          try {
+            const draftResponse = await fetch(`http://127.0.0.1:8000/draft?id=${last_active_draft}`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json', // Adjust the content type as needed
+            }})
 
-  //   fetchData();
-  // }, []);
+            if (draftResponse.ok) {
+              const draftResult = await draftResponse.json()
+              console.log('this is draftResult', draftResult)
+              setData('somedata')
+            }
+            else {
+              console.log('error occured')
+            }
+
+          }
+          catch (error) {
+            console.error(error)
+          }
+
+
+
+
+
+
+        } else {
+          console.error('Error:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
 
   useEffect(() => {
@@ -257,7 +290,7 @@ const Tiptap = () => {
   return (
     <div> 
 
-    <DashboardNavbar draftsBar={handleSidebar}/>
+    <DashboardNavbar draftsBar={handleSidebar} />
     
     <div className="flex gap-x-4 py-4 ">
         

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from "@/components/ui/button";
 import {File, Plus, LogOut, Sparkles} from "lucide-react";
 import { ScrollArea
- } from './ui/scroll-area';
+ } from '../ui/scroll-area';
 const drafts = ({contentChange} : {contentChange : ()=> void }) => {
 
 
