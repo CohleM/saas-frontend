@@ -35,7 +35,7 @@ const drafts = ({contentChange, drafts} : {contentChange : ()=> void, drafts: Dr
         "Feeling Happy",
       ]
 
-      console.log(drafts)
+      // console.log(drafts)
   
      
       // console.log(Object.entries(userdata['drafts']));

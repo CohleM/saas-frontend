@@ -132,9 +132,17 @@ const Tiptap = () => {
   }, [data, editor]);
 
   // tiptap ProseMirror prose-invert prose-headings:font-title focus:outline-none [&:focus-visible]:outline-none max-w-full
+  function truncateString(str: string, maxLength : number) {
+    if (str.length > maxLength) {
+      return str.slice(0, maxLength) + '...';
+    }
+    return str;
+  }
+
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     const html_text = editor.getHTML();
+    const text_only = editor.getText()
     // const json_text = editor.getText();
     setLocalStorage(html_text)
 
@@ -151,6 +159,7 @@ const Tiptap = () => {
       },
       body: JSON.stringify({
         text: html_text,
+        name : truncateString(text_only, 20)
       }), 
     })
 
