@@ -61,7 +61,7 @@ const Tiptap = () => {
 
   const [userdata, setUserData] = useState(null);
   const [accesstoken, setAccessToken] = useLocalStorage("access_token",'');
-
+  const [activeDraft, setActiveDraft] = useState(null);
 
 
 
@@ -115,7 +115,6 @@ const Tiptap = () => {
 
   useEffect(() => {
     if (editor) {
-
       editor.commands.setContent(data);
     }
   }, [data, editor]);
@@ -205,6 +204,37 @@ const Tiptap = () => {
   
 
   }, [holdEditing])
+
+  useEffect(() => {
+    const token = accesstoken 
+    const fetchData = async () => {
+    try {
+      const draftResponse = await fetch(`http://127.0.0.1:8000/draft?id=${activeDraft}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json', // Adjust the content type as needed
+      }})
+
+      if (draftResponse.ok) {
+        const draftResult = await draftResponse.json()
+        console.log('this is draftResult', draftResult)
+        setData(draftResult['text'])
+      }
+      else {
+        console.log('error occured')
+      }
+    }
+    catch (error) {
+      console.error(error)
+    }
+    }
+
+    fetchData()
+
+
+  }, [activeDraft])
+  
   
   //verify the access_token that is in the localStorage
   useEffect(() => {
@@ -232,33 +262,8 @@ const Tiptap = () => {
           console.log(all_drafts[0])
           const last_active_draft = all_drafts[0]['id']
           console.log(last_active_draft)
+          setActiveDraft(last_active_draft)
           
-          try {
-            const draftResponse = await fetch(`http://127.0.0.1:8000/draft?id=${last_active_draft}`, {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json', // Adjust the content type as needed
-            }})
-
-            if (draftResponse.ok) {
-              const draftResult = await draftResponse.json()
-              console.log('this is draftResult', draftResult)
-              setData('somedata')
-            }
-            else {
-              console.log('error occured')
-            }
-
-          }
-          catch (error) {
-            console.error(error)
-          }
-
-
-
-
-
 
         } else {
           console.error('Error:', response.statusText);
