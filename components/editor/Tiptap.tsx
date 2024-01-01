@@ -58,6 +58,15 @@ const Tiptap = () => {
   const [previousStreamedContent, setPreviousStreamedContent] = useState('');
   const [editorWidth, setEditorWidth] = useState('500px');
 
+
+  const [userdata, setUserData] = useState(null);
+  const [accesstoken, setAccessToken] = useLocalStorage("access_token",'');
+
+
+
+
+
+
   useEffect(() => {
     setPreviousStreamedContent(streamedContent);
   }, [streamedContent]);
@@ -117,7 +126,7 @@ const Tiptap = () => {
     const json_text = editor.getJSON();
     // const json_text = editor.getText();
     setLocalStorage(json_text)
-    
+
   }, 1000);
 
 
@@ -197,9 +206,44 @@ const Tiptap = () => {
 
   }, [holdEditing])
   
+  // //verify the access_token that is in the localStorage
+  // useEffect(() => {
+  //   // Replace 'your-backend-endpoint' with the actual backend API endpoint
+  //   const apiUrl = `http://127.0.0.1:8000/private-data`;
+
+  //   const fetchData = async () => {
+  //     try {
+  //       const token = accesstoken; // Replace with your actual bearer token
+
+  //       const response = await fetch(apiUrl, {
+  //         method: 'GET',
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           'Content-Type': 'application/json', // Adjust the content type as needed
+  //         },
+  //       });
+
+  //       if (response.ok) {
+  //         const result = await response.json();
+  //         setUserData(result);
+  //         console.log(result)
+  //       } else {
+  //         console.error('Error:', response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
 
-
+  useEffect(() => {
+    //pass
+    
+  }, [userdata])
+  
 
   const [toggleSidebar, setToggleSidebar] = useState(true);
 
