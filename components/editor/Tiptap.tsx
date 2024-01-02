@@ -351,7 +351,7 @@ const Tiptap = () => {
           //console.log('heheall_drafts.length)
           if (all_drafts.length == 0) {
             createNewDraft()
-            
+
           }
           else{
             setDrafts(all_drafts)
@@ -402,7 +402,7 @@ const Tiptap = () => {
     <div className="flex gap-x-4 py-4 ">
         
         {toggleSidebar && drafts && <div className="sticky top-0 w-1/3 h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
-        <Drafts contentChange={handleContent} drafts={drafts} setActiveDraft={handleActiveDraft}/>
+        <Drafts contentChange={handleContent} drafts={drafts} setActiveDraft={handleActiveDraft} createNewDraft = {createNewDraft}/>
 
         </div>
         }

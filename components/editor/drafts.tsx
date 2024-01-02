@@ -22,9 +22,10 @@ type DraftsProps = {
   contentChange: () => void;
   drafts: Draft[];
   setActiveDraft: (newActiveDraft: number) => void;
+  createNewDraft: () => void;
 };
 
-const drafts = ({contentChange, drafts, setActiveDraft} : DraftsProps) => {
+const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft} : DraftsProps) => {
 
 
       // console.log(drafts)
@@ -47,7 +48,7 @@ const drafts = ({contentChange, drafts, setActiveDraft} : DraftsProps) => {
 
 <ScrollArea className="h-[calc(100vh-15rem)] px-1 ">
             <div className="space-y-1 p-2">
-            <Button className="space-x-4 w-full justify-start" variant="ghost" onClick={contentChange}>
+            <Button className="space-x-4 w-full justify-start" variant="ghost" onClick={() => createNewDraft()}>
             <Plus className="mx-2 w-4 h-4" />
             New document
           </Button>
