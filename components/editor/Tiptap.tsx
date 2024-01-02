@@ -389,6 +389,18 @@ const Tiptap = () => {
             createNewDraft()
           }
           else{
+
+            const sortedDrafts = all_drafts.sort((a, b) => {
+              // Convert the last_updated values to Date objects for comparison
+              const dateA = new Date(a.last_updated);
+              const dateB = new Date(b.last_updated);
+            
+              // Sort in descending order (latest first)
+              return dateB - dateA;
+            });
+
+            console.log('sorted draft', sortedDrafts)
+
             setDrafts(all_drafts)
             const last_active_draft = all_drafts[0]['id']
             console.log(last_active_draft)
@@ -408,7 +420,7 @@ const Tiptap = () => {
   }
   //verify the access_token that is in the localStorage
   useEffect(() => {
-    // Replace 'your-backend-endpoint' with the actual backend API endpoint
+    
     userInfo()
   }, []);
 
