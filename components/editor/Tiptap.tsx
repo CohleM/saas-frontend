@@ -288,6 +288,36 @@ const Tiptap = () => {
 
 
   }, [activeDraft])
+
+
+
+  const createNewDraft = () => {
+    const token = accesstoken 
+    const fetchData = async () => {
+    try {
+      const draftResponse = await fetch(`http://127.0.0.1:8000/create-draft`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json', // Adjust the content type as needed
+      }})
+
+      if (draftResponse.ok) {
+        const draftResult = await draftResponse.json()
+        console.log('this is a new draftResult', draftResult)
+        setActiveDraft(draftResult['id'])
+      }
+      else {
+        console.log('error occured while creating draft')
+      }
+    }
+    catch (error) {
+      console.error(error)
+    }
+    }
+
+    fetchData()  
+  }
   
   
   //verify the access_token that is in the localStorage
@@ -311,14 +341,26 @@ const Tiptap = () => {
           const result = await response.json();
           setUserData(result);
           console.log('hehe', result)
+
+          
           //sort the result
           const all_drafts = result['drafts']
-          console.log('all draft',all_drafts)
 
-          setDrafts(all_drafts)
-          const last_active_draft = all_drafts[0]['id']
-          console.log(last_active_draft)
-          setActiveDraft(last_active_draft)
+
+          console.log('all draft',all_drafts)
+          //console.log('heheall_drafts.length)
+          if (all_drafts.length == 0) {
+            createNewDraft()
+            
+          }
+          else{
+            setDrafts(all_drafts)
+            const last_active_draft = all_drafts[0]['id']
+            console.log(last_active_draft)
+            setActiveDraft(last_active_draft)
+          }
+
+
           
 
         } else {
