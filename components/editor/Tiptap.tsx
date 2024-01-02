@@ -74,7 +74,7 @@ const Tiptap = () => {
 
   const [userdata, setUserData] = useState<UserData | null>();
   const [accesstoken, setAccessToken] = useLocalStorage("access_token",'');
-  const [activeDraft, setActiveDraft] = useState(null);
+  const [activeDraft, setActiveDraft] = useState<number>();
 
   const [drafts, setDrafts] = useState<Draft[]>();
 
@@ -346,6 +346,10 @@ const Tiptap = () => {
       
   }
 
+  const handleActiveDraft = (newActiveDraft: number) => {
+    console.log('HEHEHEH',newActiveDraft)
+    setActiveDraft(newActiveDraft)
+  }
 
 
   return (
@@ -356,7 +360,7 @@ const Tiptap = () => {
     <div className="flex gap-x-4 py-4 ">
         
         {toggleSidebar && drafts && <div className="sticky top-0 w-1/3 h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
-        <Drafts contentChange={handleContent} drafts={drafts} />
+        <Drafts contentChange={handleContent} drafts={drafts} setActiveDraft={handleActiveDraft}/>
 
         </div>
         }

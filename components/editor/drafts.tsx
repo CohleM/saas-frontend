@@ -18,22 +18,14 @@ type UserData = {
   drafts: Draft[];
 };
 
+type DraftsProps = {
+  contentChange: () => void;
+  drafts: Draft[];
+  setActiveDraft: (newActiveDraft: number) => void;
+};
 
+const drafts = ({contentChange, drafts, setActiveDraft} : DraftsProps) => {
 
-const drafts = ({contentChange, drafts} : {contentChange : ()=> void, drafts: Draft[]}) => {
-
-
-
- const playlists = [
-        "Recently Added",
-        "Recently Played",
-        "Top Songs",
-        "Top Albums",
-        "Top Artists",
-        "Logic Discography",
-        "Bedtime Beats",
-        "Feeling Happy",
-      ]
 
       // console.log(drafts)
   
@@ -64,6 +56,7 @@ const drafts = ({contentChange, drafts} : {contentChange : ()=> void, drafts: Dr
                   key={`${item}-${i}`}
                   variant="ghost"
                   className="w-full justify-start font-normal"
+                  onClick={() => setActiveDraft(item.id)}
                 >
                     <File className='h-4 w-4 mx-2'/>
                   {item.name}
