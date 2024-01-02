@@ -4,7 +4,7 @@ import {File, Plus, LogOut, Sparkles} from "lucide-react";
 import { ScrollArea
  } from '../ui/scroll-area';
  import { useEffect } from 'react';
-
+ import { useRouter} from 'next/navigation';
  type Draft = {
   id: number;
   name: string;
@@ -28,15 +28,19 @@ type DraftsProps = {
 
 const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDraft} : DraftsProps) => {
 
-
+  const { push } = useRouter();
       // console.log(drafts)
   
      
       // console.log(Object.entries(userdata['drafts']));
       
-      
 
-      
+      const handleLogout = () => {
+        console.log('yoooo')
+        window.localStorage.clear()
+        push('/login')
+
+      }
 
   return (
     <div className='mt-10 '>
@@ -67,7 +71,7 @@ const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDr
             </div>
           </ScrollArea>
           <div className='flex flex-col w-full bg-white px-2 space-y-2'>
-          <Button variant="outline" className='w-full justify-center' size="sm"><LogOut className="w-4 h-4 mx-2"/> Log out</Button>
+          <Button variant="outline" className='w-full justify-center' size="sm" onClick={handleLogout}><LogOut className="w-4 h-4 mx-2"/> Log out</Button>
           <Button variant="outline" className='w-full bg-purple-500 text-white' size="sm"><Sparkles className="w-4 h-4 mx-2" />Upgrade</Button>
           </div>
                    </div>
