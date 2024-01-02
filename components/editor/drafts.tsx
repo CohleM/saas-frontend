@@ -23,9 +23,10 @@ type DraftsProps = {
   drafts: Draft[];
   setActiveDraft: (newActiveDraft: number) => void;
   createNewDraft: () => void;
+  activeDraft : number | undefined;
 };
 
-const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft} : DraftsProps) => {
+const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDraft} : DraftsProps) => {
 
 
       // console.log(drafts)
@@ -56,11 +57,11 @@ const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft} : Drafts
                 <Button
                   key={`${item}-${i}`}
                   variant="ghost"
-                  className="w-full justify-start font-normal"
+                  className={`w-full justify-start font-normal  ${ activeDraft === item.id ? 'bg-indigo-500 text-white' : ''}`}
                   onClick={() => setActiveDraft(item.id)}
                 >
                     <File className='h-4 w-4 mx-2'/>
-                  {item.name}
+                  {item.name == '' ? 'Untitled' : item.name}
                 </Button>
               ))}
             </div>
