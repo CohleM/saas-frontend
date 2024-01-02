@@ -266,6 +266,7 @@ const Tiptap = () => {
     const token = accesstoken 
     const fetchData = async () => {
     try {
+      setLoading(true)
       const draftResponse = await fetch(`http://127.0.0.1:8000/draft?id=${activeDraft}`, {
       method: 'GET',
       headers: {
@@ -281,8 +282,11 @@ const Tiptap = () => {
       else {
         console.log('error occured')
       }
+      setLoading(false)
     }
     catch (error) {
+
+      setLoading(false)
       console.error(error)
     }
     }
@@ -293,39 +297,7 @@ const Tiptap = () => {
   }, [activeDraft])
 
 
-  const getAllDrafts = () => {
 
-    console.log('exexxxx')
-    const token = accesstoken 
-    const fetchData = async () => {
-    try {
-      const draftResponse = await fetch(`http://127.0.0.1:8000/get-drafts`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json', // Adjust the content type as needed
-      }})
-
-      if (draftResponse.ok) {
-        const draftResult: Draft[] = await draftResponse.json()
-        console.log('this is all the drafts', draftResult)
-
-        setDrafts(draftResult)
-        // setActiveDraft(draftResult['id'])
-
-
-      }
-      else {
-        console.log('error occured while creating draft')
-      }
-    }
-    catch (error) {
-      console.error(error)
-    }
-    }
-
-    fetchData()  
-  }
 
 
   const createNewDraft = () => {
@@ -439,10 +411,7 @@ const Tiptap = () => {
   }, []);
 
 
-  useEffect(() => {
-    //pass
-    
-  }, [userdata])
+
   
 
   const [toggleSidebar, setToggleSidebar] = useState(true);
