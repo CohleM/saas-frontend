@@ -49,7 +49,7 @@ const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDr
 
 <ScrollArea className="h-[calc(100vh-15rem)] px-1 ">
             <div className="space-y-1 p-2">
-            <Button className="space-x-4 w-full justify-start" variant="ghost" onClick={() => createNewDraft()}>
+            <Button className="space-x-4 w-full justify-start text-indigo-500 font-semibold" variant="link" onClick={() => createNewDraft()}>
             <Plus className="mx-2 w-4 h-4" />
             New document
           </Button>
@@ -57,7 +57,7 @@ const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDr
                 <Button
                   key={`${item}-${i}`}
                   variant="ghost"
-                  className={`w-full justify-start font-normal  ${ activeDraft === item.id ? 'bg-indigo-500 text-white' : ''}`}
+                  className={`w-full justify-start font-normal  ${ activeDraft === item.id ? 'bg-indigo-500 text-white hover:bg-indigo-500 hover:text-white' : ''}`}
                   onClick={() => setActiveDraft(item.id)}
                 >
                     <File className='h-4 w-4 mx-2'/>
