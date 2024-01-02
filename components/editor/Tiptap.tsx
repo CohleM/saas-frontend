@@ -23,6 +23,9 @@ import ReactMarkdown from 'react-markdown';
 import { Plus, MessageSquare, User2, Bot, SendHorizontal } from "lucide-react";
 import DashboardNavbar from "@/components/dashboard-nav"
 import Drafts from "@/components/editor/drafts"
+import {Icons } from "@/components/ui/circular-progress"
+import LoadingEditor from "@/components/editor/loadingEditor"
+
 interface IResponseObject {
   role: string;
   content: string;
@@ -77,7 +80,7 @@ const Tiptap = () => {
   const [activeDraft, setActiveDraft] = useState<number>();
 
   const [drafts, setDrafts] = useState<Draft[]>();
-
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setPreviousStreamedContent(streamedContent);
@@ -359,12 +362,15 @@ const Tiptap = () => {
   
 
   const userInfo = () => {
+
+    
     const apiUrl = `http://127.0.0.1:8000/userinfo`;
 
     const fetchData = async () => {
       try {
+        setLoading(true) 
         const token = accesstoken; // Replace with your actual bearer token
-
+        
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
@@ -407,16 +413,24 @@ const Tiptap = () => {
             setActiveDraft(last_active_draft)
           }
 
+          
+
 
         } else {
           console.error('Error:', response.statusText);
         }
+
+        setLoading(false) 
       } catch (error) {
+        setLoading(false) 
         console.error('Error:', error);
       }
     };
 
+
+    
     fetchData();
+    
   }
   //verify the access_token that is in the localStorage
   useEffect(() => {
@@ -439,7 +453,7 @@ const Tiptap = () => {
   }
 
   const handleActiveDraft = (newActiveDraft: number) => {
-    console.log('HEHEHEH',newActiveDraft)
+    
     setActiveDraft(newActiveDraft)
   }
 
@@ -450,16 +464,22 @@ const Tiptap = () => {
     <DashboardNavbar draftsBar={handleSidebar} />
     
     <div className="flex gap-x-4 py-4 ">
-        
+
+    {/* <Icons.spinner className="h-4 w-4 animate-spin" /> */}
+    
         {toggleSidebar && drafts && <div className="sticky top-0 w-1/3 h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
         <Drafts contentChange={handleContent} drafts={drafts} setActiveDraft={handleActiveDraft} createNewDraft = {createNewDraft} activeDraft={activeDraft}/>
 
         </div>
         }
       <div className="w-full overflow-y-auto mx-10 mt-10">
-      {editor && <EditorBubbleMenu editor={editor}  sendMessage={handleSendMessage} />}
-
-        <EditorContent editor={editor} />
+      {loading ? (
+  <LoadingEditor />
+) : (
+  <EditorContent editor={editor}>
+    {editor && <EditorBubbleMenu editor={editor} sendMessage={handleSendMessage} />}
+  </EditorContent>
+)}
 
         </div>
 
