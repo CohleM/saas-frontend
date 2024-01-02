@@ -25,6 +25,7 @@ import DashboardNavbar from "@/components/dashboard-nav"
 import Drafts from "@/components/editor/drafts"
 import {Icons } from "@/components/ui/circular-progress"
 import LoadingEditor from "@/components/editor/loadingEditor"
+import { ErrorDialogBox } from "../errorAlert";
 
 interface IResponseObject {
   role: string;
@@ -81,6 +82,8 @@ const Tiptap = () => {
 
   const [drafts, setDrafts] = useState<Draft[]>();
   const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     setPreviousStreamedContent(streamedContent);
@@ -385,15 +388,15 @@ const Tiptap = () => {
             setActiveDraft(last_active_draft)
           }
 
-          
-
 
         } else {
-          console.error('Error:', response.statusText);
+          console.error('Error:', response);
+          setError(true)
+          //alert('Your session has seems to have expired, please login again.')
         }
-
         setLoading(false) 
       } catch (error) {
+        alert('')
         setLoading(false) 
         console.error('Error:', error);
       }
@@ -431,7 +434,7 @@ const Tiptap = () => {
     <div> 
 
     <DashboardNavbar draftsBar={handleSidebar} />
-    
+    {error && <ErrorDialogBox />}
     <div className="flex gap-x-4 py-4 ">
 
     {/* <Icons.spinner className="h-4 w-4 animate-spin" /> */}
