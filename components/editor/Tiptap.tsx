@@ -25,7 +25,7 @@ import DashboardNavbar from "@/components/dashboard-nav"
 import Drafts from "@/components/editor/drafts"
 import {Icons } from "@/components/ui/circular-progress"
 import LoadingEditor from "@/components/editor/loadingEditor"
-import { ErrorDialogBox } from "../errorAlert";
+import { ErrorDialogBox } from "@/components/errorAlert";
 import { useRouter} from 'next/navigation';
 interface IResponseObject {
   role: string;

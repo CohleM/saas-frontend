@@ -75,7 +75,7 @@ export function ErrorDialogBox({ title, description,  onAction, actionLabel } : 
 
 
     return (
-    <AlertDialog open={true}>
+    <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
