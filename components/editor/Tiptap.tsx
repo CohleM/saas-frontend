@@ -290,6 +290,40 @@ const Tiptap = () => {
   }, [activeDraft])
 
 
+  const getAllDrafts = () => {
+
+    console.log('exexxxx')
+    const token = accesstoken 
+    const fetchData = async () => {
+    try {
+      const draftResponse = await fetch(`http://127.0.0.1:8000/get-drafts`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json', // Adjust the content type as needed
+      }})
+
+      if (draftResponse.ok) {
+        const draftResult: Draft[] = await draftResponse.json()
+        console.log('this is all the drafts', draftResult)
+
+        setDrafts(draftResult)
+        // setActiveDraft(draftResult['id'])
+
+
+      }
+      else {
+        console.log('error occured while creating draft')
+      }
+    }
+    catch (error) {
+      console.error(error)
+    }
+    }
+
+    fetchData()  
+  }
+
 
   const createNewDraft = () => {
     const token = accesstoken 
@@ -305,7 +339,10 @@ const Tiptap = () => {
       if (draftResponse.ok) {
         const draftResult = await draftResponse.json()
         console.log('this is a new draftResult', draftResult)
-        setActiveDraft(draftResult['id'])
+        // getAllDrafts();
+        // setActiveDraft(draftResult['id'])
+        userInfo();
+
       }
       else {
         console.log('error occured while creating draft')
@@ -320,9 +357,8 @@ const Tiptap = () => {
   }
   
   
-  //verify the access_token that is in the localStorage
-  useEffect(() => {
-    // Replace 'your-backend-endpoint' with the actual backend API endpoint
+
+  const userInfo = () => {
     const apiUrl = `http://127.0.0.1:8000/userinfo`;
 
     const fetchData = async () => {
@@ -351,7 +387,6 @@ const Tiptap = () => {
           //console.log('heheall_drafts.length)
           if (all_drafts.length == 0) {
             createNewDraft()
-
           }
           else{
             setDrafts(all_drafts)
@@ -360,8 +395,6 @@ const Tiptap = () => {
             setActiveDraft(last_active_draft)
           }
 
-
-          
 
         } else {
           console.error('Error:', response.statusText);
@@ -372,6 +405,11 @@ const Tiptap = () => {
     };
 
     fetchData();
+  }
+  //verify the access_token that is in the localStorage
+  useEffect(() => {
+    // Replace 'your-backend-endpoint' with the actual backend API endpoint
+    userInfo()
   }, []);
 
 
