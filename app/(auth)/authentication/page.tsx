@@ -73,7 +73,7 @@ const MagicLinkPage: React.FC = () => {
 
   }, []);
 
-  return <div>Verifying magic link...</div>;
+  return <div>Verifying...</div>;
 };
 
 export default MagicLinkPage;

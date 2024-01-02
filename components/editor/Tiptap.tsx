@@ -26,7 +26,7 @@ import Drafts from "@/components/editor/drafts"
 import {Icons } from "@/components/ui/circular-progress"
 import LoadingEditor from "@/components/editor/loadingEditor"
 import { ErrorDialogBox } from "../errorAlert";
-
+import { useRouter} from 'next/navigation';
 interface IResponseObject {
   role: string;
   content: string;
@@ -85,6 +85,7 @@ const Tiptap = () => {
 
   const [error, setError] = useState(false)
 
+  const {push} = useRouter();
   useEffect(() => {
     setPreviousStreamedContent(streamedContent);
   }, [streamedContent]);
@@ -390,7 +391,7 @@ const Tiptap = () => {
 
 
         } else {
-          console.error('Error:', response);
+          //set the token expired error
           setError(true)
           //alert('Your session has seems to have expired, please login again.')
         }
@@ -434,7 +435,12 @@ const Tiptap = () => {
     <div> 
 
     <DashboardNavbar draftsBar={handleSidebar} />
-    {error && <ErrorDialogBox />}
+    {error && <ErrorDialogBox 
+        title="Session Expired" 
+        description="Your Session has expired. Please Login"
+        onAction={ () => {push('/login')}}
+        actionLabel="Login"
+    />}
     <div className="flex gap-x-4 py-4 ">
 
     {/* <Icons.spinner className="h-4 w-4 animate-spin" /> */}
