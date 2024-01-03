@@ -48,24 +48,30 @@ export default function FileUploader() {
         if (!event.target.files || event.target.files.length === 0) {
           return; // User canceled file selection
         }
-      
         const file = event.target.files[0];
         const formData = new FormData();
-      
         console.log(file)
-
         formData.append('file', file); 
 
-        // for (const file of Array.from(files)) {
-        //   formData.append('files', file);
-        // }
       
-        //handle the submissison
-        await fetch('/api/file', {
-          method: 'POST',
-          body: formData,
-        });
+        try { 
+            const response = await fetch('http://127.0.0.1:8000/upload-file', {
+                method: 'POST',
+                body: formData
+            })
 
+            if(response.ok) {
+                console.log('file succesfull uploaded')
+                console.log(response)
+
+            }
+            else {
+                console.log('error unable to upload the file')
+                console.log(response)
+            }
+        }
+        catch (error) {
+        }
 
 
       }

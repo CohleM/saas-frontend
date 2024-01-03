@@ -31,7 +31,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <h1>File Upload Example</h1>
-      <FileUploader onFileUpload={handleFileUpload} />
+      <FileUploader />
       {uploadedFileName && <p>Uploaded File: {uploadedFileName}</p>}
     </div>
   );
