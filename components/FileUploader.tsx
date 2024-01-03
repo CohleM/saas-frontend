@@ -105,11 +105,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useEffect, useState, useRef } from "react";
 import { Button } from "./ui/button";
+import {Loader2} from 'lucide-react';
 
+export const Icons = {
+  spinner: Loader2,
+};
 export default function FileUploader() {
 
     const [fileData, setFileData] = useState<File>();
     const [uploading, setUploading] = useState(false);
+    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [uploadError, setUploadError] = useState<string | null>(null);
+    
     const imageInputRef = useRef<HTMLInputElement>(null);
 
 
@@ -123,6 +130,11 @@ export default function FileUploader() {
       }
 
       const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
+            setUploading(true)
+            setUploadSuccess(false);
+            setUploadError(null);
+
             event.preventDefault(); // Prevent default form submission behavior
             if (!imageInputRef.current?.files || imageInputRef.current?.files.length === 0) {
               // You could set some error message in a state here.
@@ -145,17 +157,24 @@ export default function FileUploader() {
         if(response.ok) {
             console.log('file succesfull uploaded')
             console.log(response)
-
+                setUploadSuccess(true);
+                setUploadError(null);
         }
         else {
             console.log('error unable to upload the file')
             console.log(response)
+            setUploadSuccess(false);
+            setUploadError('Error: Unable to upload the file');
         }
     }
     catch (error) {
         console.log('error', error )
+        setUploadSuccess(false);
+        setUploadError('Error: Unable to upload the file');
     }
+    setUploading(false)
 }
+
 
 
 
@@ -163,8 +182,10 @@ export default function FileUploader() {
     <div className="grid w-full max-w-sm items-center gap-1.5">
         <form onSubmit={handleSubmit}> 
       <Input  type="file" ref={imageInputRef}/>
-      <Button type="submit">Upload </Button>
+      <Button type="submit" className="w-full">{uploading && <Icons.spinner className="h-4 w-4 animate-spin mx-2" />}Upload </Button>
 </form>
+            {uploadSuccess && <p>File successfully uploaded</p>}
+            {uploadError && <p>{uploadError}</p>}
     </div>
   )
 }
