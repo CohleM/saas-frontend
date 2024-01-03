@@ -48,7 +48,7 @@
 //     )
 //   }
 
-
+import { ScrollArea } from "@/components/ui/scroll-area"; 
 import { Button } from "@/components/ui/button"
 import { CopyIcon } from "@radix-ui/react-icons"
 import {
@@ -72,6 +72,15 @@ export function FileList({onCancel} : { onCancel : () => void}) {
   setOpen(false);
   onCancel();
 }
+
+
+const tags = Array.from({ length: 50 }).map(
+  (_, i, a) => `v1.2.0-beta.${a.length - i}`
+)
+
+
+
+
   return (
     <Dialog open={open} onOpenChange={handleCancel}>
       <DialogTrigger asChild>
@@ -79,12 +88,14 @@ export function FileList({onCancel} : { onCancel : () => void}) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Share link</DialogTitle>
+          <DialogTitle>Files</DialogTitle>
           <DialogDescription>
-            Anyone who has this link will be able to view this.
+          All the files for the draft. 
           </DialogDescription>
         </DialogHeader>
-        <div className="flex items-center space-x-2">
+
+
+        {/* <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">
               Link
@@ -95,11 +106,35 @@ export function FileList({onCancel} : { onCancel : () => void}) {
               readOnly
             />
           </div>
-          <Button type="submit" size="sm" className="px-3">
-            <span className="sr-only">Copy</span>
-            <CopyIcon className="h-4 w-4" />
-          </Button>
-        </div>
+        </div> */}
+
+
+        <ScrollArea className="h-72 w-full rounded-md border">
+      <div className="p-4">
+        
+        {tags.map((tag) => (
+          <>
+             <Button
+                  key={tag}
+                  variant="ghost"
+                  className={`w-full justify-start font-normal `}
+                  
+                >
+                    {tag}
+                </Button>
+
+            
+            
+          </>
+        ))}
+      </div>
+    </ScrollArea>
+
+
+
+
+
+
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary" onClick={handleCancel}>
