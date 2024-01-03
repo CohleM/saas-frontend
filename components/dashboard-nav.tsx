@@ -59,18 +59,30 @@ const callsToAction = [
 // function classNames(...classes) {
 //   return classes.filter(Boolean).join(' ')
 // }
-
+import { FileList } from "./FileList";
 export default function DashboardNavbar({draftsBar} : {draftsBar : () => void }) {
+
+  const [isFileOpen, setIsFileOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+
 
 
   const handleDraftsBar = () => {
     draftsBar();
   }
+
+  const handleCancel = () => {
+    setIsFileOpen(false);
+  }
+
+
   return (
 
 
 <div >
+
+  {isFileOpen && <FileList onCancel={handleCancel} /> }
 <div className="h-14 top-0 bg-white left-0 fixed w-full z-20">
 
 <div className="flex justify-between items-center h-full px-4"> 
@@ -80,6 +92,8 @@ export default function DashboardNavbar({draftsBar} : {draftsBar : () => void })
     <Bars3Icon className="h-6 w-6"></Bars3Icon>
     </button>
     <p className="text-lg font-bold">AI Writer</p>
+    
+    <button onClick={() => {setIsFileOpen(true) }} >Files</button>
   </div>
 
   {/* Right elements */}
