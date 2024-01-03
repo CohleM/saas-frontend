@@ -61,10 +61,19 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog"
+
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
-
+import FileUploader from "@/components/FileUploader"
 export function FileList({onCancel} : { onCancel : () => void}) {
   const [open, setOpen] = useState(true);
 
@@ -95,21 +104,16 @@ const tags = Array.from({ length: 50 }).map(
         </DialogHeader>
 
 
-        {/* <div className="flex items-center space-x-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input
-              id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
-              readOnly
-            />
-          </div>
-        </div> */}
 
 
-        <ScrollArea className="h-72 w-full rounded-md border">
+    <Tabs defaultValue="account" className="w-[400px]">
+      <TabsList className="grid w-full grid-cols-2">
+        <TabsTrigger value="Files">Files</TabsTrigger>
+        <TabsTrigger value="Upload File">Upload File</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="Files">
+      <ScrollArea className="h-72 w-full rounded-md border">
       <div className="p-4">
         
         {tags.map((tag) => (
@@ -118,17 +122,27 @@ const tags = Array.from({ length: 50 }).map(
                   key={tag}
                   variant="ghost"
                   className={`w-full justify-start font-normal `}
-                  
                 >
                     {tag}
                 </Button>
-
-            
-            
           </>
         ))}
       </div>
     </ScrollArea>
+
+      </TabsContent>
+
+      <TabsContent value="Upload File">
+          <div className="h-72"> 
+          <FileUploader />
+          </div>
+
+      </TabsContent> 
+
+      </Tabs>
+
+
+
 
 
 
