@@ -445,12 +445,12 @@ const Tiptap = () => {
 
     {/* <Icons.spinner className="h-4 w-4 animate-spin" /> */}
     
-        {toggleSidebar && drafts && <div className=" top-0 fixed left-0 w-[250px] h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
+        {toggleSidebar && drafts && <div className="top-0 fixed left-0 w-[240px] h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
         <Drafts contentChange={handleContent} drafts={drafts} setActiveDraft={handleActiveDraft} createNewDraft = {createNewDraft} activeDraft={activeDraft}/>
 
         </div>
         }
-      <div className={`w-full overflow-y-auto  mt-10 ${toggleSidebar ? 'ml-[250px]' : 'ml-10' } `}>
+      <div className={`w-full overflow-y-auto  mt-10 ${toggleSidebar ? 'ml-[260px]' : 'ml-10' } `}>
       {loading ? (
   <LoadingEditor />
 ) : (

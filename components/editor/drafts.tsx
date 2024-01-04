@@ -43,7 +43,7 @@ const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDr
       }
 
   return (
-    <div className='mt-10 '>
+    <div className='mt-14'>
         <div className='flex flex-col items-center '>
             {/* <p className='text-base font-bold mt-5'> Drafts</p>
             <Button className='w-full' >AI is fascinating</Button>
@@ -51,7 +51,7 @@ const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDr
             <Button className='w-full' >AI is fascinating</Button>
             <Button className='w-full' >AI is fascinating</Button> */}
 
-<ScrollArea className="h-[calc(100vh-15rem)] px-1 ">
+<ScrollArea className="h-[calc(100vh-10rem)] px-1 ">
             <div className="space-y-1 p-2">
             <Button className="space-x-4 w-full justify-start text-indigo-500 font-semibold" variant="link" onClick={() => createNewDraft()}>
             <Plus className="mx-2 w-4 h-4" />
@@ -70,7 +70,7 @@ const drafts = ({contentChange, drafts, setActiveDraft, createNewDraft, activeDr
               ))}
             </div>
           </ScrollArea>
-          <div className='flex flex-col w-full bg-white px-2 space-y-2'>
+          <div className='flex flex-col w-full bg-white px-2 space-y-2 my-4'>
           <Button variant="outline" className='w-full justify-center' size="sm" onClick={handleLogout}><LogOut className="w-4 h-4 mx-2"/> Log out</Button>
           <Button variant="outline" className='w-full bg-purple-500 text-white' size="sm"><Sparkles className="w-4 h-4 mx-2" />Upgrade</Button>
           </div>
