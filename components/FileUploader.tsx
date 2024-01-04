@@ -1,112 +1,12 @@
-// // // components/FileUploader.tsx
-// 'use client'
-// import React, { useCallback } from 'react';
-// import { useDropzone } from 'react-dropzone';
-// // import { Input } from "@/components/ui/input"
-// // import { Label } from "@/components/ui/label"
 
-// // interface FileUploaderProps {
-// //   onFileUpload: (file: File) => void;
-// // }
-
-// // const FileUploader: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
-// //   const onDrop = useCallback((acceptedFiles: File[]) => {
-// //     if (acceptedFiles.length > 0) {
-
-
-// //       const file = acceptedFiles[0];
-// //       console.log(acceptedFiles)
-// //       onFileUpload(file);
-// //     }
-// //   }, [onFileUpload]);
-
-// //   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-// //   return (
-// //     <div {...getRootProps()} className='grid w-full max-w-sm items-center gap-1.5'>
-// //       {/* <input {...getInputProps()} />    */}
-// //       <Input id="picture" type="file" {...getInputProps()} />
-// //       {
-// //         isDragActive ?
-// //           <p>Drop the files here ...</p> :
-// //           <p>Drag 'n' drop some files here, or click to select files</p>
-// //       }
-// //     </div>
-
-
-// //   );
-// // };
-
-// // export default FileUploader;
-
-
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { useState } from 'react';
-// import { Button } from './ui/button';
-// export default function FileUploader() {
-//     const [selectedFile, setSelectedFile] = useState(null);
-
-//     const handleFileChange = (event) => {
-//         console.log(event.target.files[0])
-//         setSelectedFile(event.target.files[0]);
-//       }
-
-
-
-
-//     async function handleFileUpload() {
-
-
-//         if (selectedFile) {
-            
-//             const formData = new FormData();
-//             console.log(selectedFile)
-//             formData.append('file', selectedFile); 
-    
-          
-//             try { 
-//                 const response = await fetch('http://127.0.0.1:8000/upload-file', {
-//                     method: 'POST',
-//                     body: formData
-//                 })
-    
-//                 if(response.ok) {
-//                     console.log('file succesfull uploaded')
-//                     console.log(response)
-    
-//                 }
-//                 else {
-//                     console.log('error unable to upload the file')
-//                     console.log(response)
-//                 }
-//             }
-//             catch (error) {
-//             }
-
-//         }
-
-
-
-//       }
-
-//   return (
-//     <div className="grid w-full max-w-sm items-center gap-1.5">
-//       {/* <Label htmlFor="picture">Picture</Label> */}
-//       <Input  type="file"  onChange={handleFileChange}/>
-//       <Button onClick={handleFileUpload}>Upload</Button>
-//     </div>
-//   )
-// }
-
-
+'use client'
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useEffect, useState, useRef } from "react";
 import { Button } from "./ui/button";
 import {Loader2} from 'lucide-react';
-
+import { CheckCircle,XCircle } from 'lucide-react';
 export const Icons = {
   spinner: Loader2,
 };
@@ -159,6 +59,7 @@ export default function FileUploader() {
             console.log(response)
                 setUploadSuccess(true);
                 setUploadError(null);
+                
         }
         else {
             console.log('error unable to upload the file')
@@ -166,6 +67,7 @@ export default function FileUploader() {
             setUploadSuccess(false);
             setUploadError('Error: Unable to upload the file');
         }
+        imageInputRef.current.value = '';
     }
     catch (error) {
         console.log('error', error )
@@ -181,11 +83,11 @@ export default function FileUploader() {
   return (
     <div className="grid w-full max-w-sm items-center gap-1.5">
         <form onSubmit={handleSubmit}> 
-      <Input  type="file" ref={imageInputRef}/>
-      <Button type="submit" className="w-full">{uploading && <Icons.spinner className="h-4 w-4 animate-spin mx-2" />}Upload </Button>
+      <Input  type="file" ref={imageInputRef} className="my-2"/>
+      <Button type="submit" className="w-full my-2">{uploading && <Icons.spinner className="h-4 w-4 animate-spin mx-2 "  />}Upload </Button>
 </form>
-            {uploadSuccess && <p>File successfully uploaded</p>}
-            {uploadError && <p>{uploadError}</p>}
+            {uploadSuccess && <div className='w-full bg-green-200 p-4 rounded flex space-x-2'><CheckCircle className='w-4 h-4 text-green-600'/> <div className='flex space-x-2'> </div><p className="text-green-500 text-sm">File Uploaded Successfully</p></div>}
+            {uploadError &&  <div className='w-full bg-red-200 p-4 rounded flex space-x-2'><XCircle className='w-4 h-4 text-red-600'/> <div className='flex space-x-2'> </div><p className="text-red-500 text-sm">Could not upload the file. Please try again.</p></div>}
     </div>
   )
 }

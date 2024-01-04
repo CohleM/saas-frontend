@@ -106,7 +106,7 @@ const tags = Array.from({ length: 50 }).map(
 
 
 
-    <Tabs defaultValue="account" className="w-[400px]">
+    <Tabs defaultValue="Files" className="w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="Files">Files</TabsTrigger>
         <TabsTrigger value="Upload File">Upload File</TabsTrigger>
