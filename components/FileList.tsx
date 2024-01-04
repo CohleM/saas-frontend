@@ -81,6 +81,8 @@ export function FileList({onCancel, draftID} : { onCancel : () => void, draftID:
   const [tab, setTab] = useState("Files");
   const [accesstoken, setAccessToken] = useLocalStorage("access_token",''); 
 
+  const [files, setFiles] = useState([]);
+  
   const handleCancel = () => {
   setOpen(false);
   onCancel();
@@ -119,8 +121,8 @@ const tags = Array.from({ length: 50 }).map(
       if (response.ok) {
         //do something 
         const result = await response.json()
-        console.log(result)
-        
+        console.log(result['files'])
+        setFiles(result['files']) 
       }
       else {
         //display error
@@ -161,14 +163,14 @@ const tags = Array.from({ length: 50 }).map(
       <ScrollArea className="h-72 w-full rounded-md border">
       <div className="p-4">
         
-        {tags.map((tag) => (
+        {files.map((tag, id) => (
           <>
              <Button
-                  key={tag}
+                  key={id}
                   variant="ghost"
                   className={`w-full justify-start font-normal `}
                 >
-                    {tag}
+                    {tag['name']}
                 </Button>
           </>
         ))}
