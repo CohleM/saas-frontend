@@ -1,52 +1,5 @@
 'use client'
-// import {
-//     AlertDialog,
-//     AlertDialogAction,
-//     AlertDialogCancel,
-//     AlertDialogContent,
-//     AlertDialogDescription,
-//     AlertDialogFooter,
-//     AlertDialogHeader,
-//     AlertDialogTitle,
-//     AlertDialogTrigger,
-//   } from "@/components/ui/alert-dialog"
-//   import { Button } from "@/components/ui/button"
-// import { useState } from "react";   
-// import { useRouter} from 'next/navigation'; 
-// import { ScrollArea } from "@/components/ui/scroll-area"; 
-// import drafts from "./editor/drafts";
 
-// export function FileList({onCancel} : { onCancel : () => void}) {
-//     const [open, setOpen] = useState(true);
-// const handleCancel = () => {
-//   setOpen(false);
-//   onCancel();
-// }
-
-//     const {push} = useRouter();
-//     const drafts = ['one',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//                     'two',
-//   ]
-//     return (
-      
-//       <div className="w-full h-96"> 
-
-//       </div>
-//     )
-//   }
 
 import { ScrollArea } from "@/components/ui/scroll-area"; 
 import { Button } from "@/components/ui/button"
@@ -68,13 +21,25 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-
+import { Separator } from "@/components/ui/separator"
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useEffect, useState } from "react"
 import FileUploader from "@/components/FileUploader"
 import useLocalStorage from "use-local-storage";
+import { ChooseFileOption } from "./ChooseFileOption";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+
+
 export function FileList({onCancel, draftID} : { onCancel : () => void, draftID: number}) {
   const [open, setOpen] = useState(true);
   
@@ -177,18 +142,28 @@ const tags = Array.from({ length: 50 }).map(
       <TabsContent value="Files">
       <ScrollArea className="h-72 w-full rounded-md border">
       <div className="p-4">
-        
+      <div className="flex flex-col space-y-2" > 
         {files.map((tag, id) => (
-          <>
-             <Button
-                  key={id}
-                  variant="ghost"
-                  className={`w-full justify-start font-normal `}
-                >
-                    {tag['name']}
-                </Button>
-          </>
+          
+            //  <Button
+            //       key={id}
+            //       variant="ghost"
+            //       className={`w-full justify-start font-normal `}
+            //     >
+            //         {tag['name']}
+            //     </Button>
+            <div>
+            <div className="flex justify-between items-center "> 
+             <p className="text-sm text-gray-600 font-semibold"> {tag['name']}</p> 
+             < ChooseFileOption  />
+          
+            </div> 
+             {/* <Separator className="my-1"/> */}
+            </div> 
+          
         ))}
+        
+        </div>
       </div>
     </ScrollArea>
 
