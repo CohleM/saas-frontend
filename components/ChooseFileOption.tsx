@@ -16,12 +16,41 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import useLocalStorage from "use-local-storage";
 
+export function ChooseFileOption({fileID} : {fileID: number}) {
+    const [accesstoken, setAccessToken] = useLocalStorage("access_token",''); 
 
-export function ChooseFileOption<TData>() {
+const handleDelete = async () => {
+    const token = accesstoken
 
+    try {
+      const response = await fetch(`http://localhost:8000/delete-file/?file_id=${fileID}`, {
+        method : 'GET',
+        headers : {
+          Authorization : `Bearer ${token}`,
+          'Content-Type' : 'application/json'
+        }
+    }
+      ) 
+
+      if (response.ok) {
+        console.log('deleted successfully')
+        //do something 
+        const result = await response.json()
+        console.log(result['success'])
+      }
+      else {
+        //display error
+      }
+    }
+
+    catch(error) {
+      console.error('error', error)
+    }
+}
   return (
-    <DropdownMenu>
+    <DropdownMenu >
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -32,15 +61,10 @@ export function ChooseFileOption<TData>() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
+        <DropdownMenuItem >Download</DropdownMenuItem>
         <DropdownMenuSeparator />
-        
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDelete}>
           Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

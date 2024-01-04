@@ -155,7 +155,7 @@ const tags = Array.from({ length: 50 }).map(
             <div>
             <div className="flex justify-between items-center "> 
              <p className="text-sm text-gray-600 font-semibold"> {tag['name']}</p> 
-             < ChooseFileOption  />
+             < ChooseFileOption fileID = {tag['id']}/>
           
             </div> 
              {/* <Separator className="my-1"/> */}
