@@ -45,7 +45,6 @@ export default function Login() {
         if (response.ok) {
           const data: SubmitEmailResponse = await response.json();
           setResponseMessage(data.message); // Update the response message state
-          setEmail('');
           // Handle successful response
           console.log(data.message);
 
