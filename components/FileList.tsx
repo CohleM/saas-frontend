@@ -72,7 +72,7 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import FileUploader from "@/components/FileUploader"
 import useLocalStorage from "use-local-storage";
 export function FileList({onCancel, draftID} : { onCancel : () => void, draftID: number}) {
@@ -122,7 +122,16 @@ const tags = Array.from({ length: 50 }).map(
         //do something 
         const result = await response.json()
         console.log(result['files'])
-        setFiles(result['files']) 
+        const sortedFiles = result['files'].sort((a, b) => {
+          // Convert the last_updated values to Date objects for comparison
+          const dateA = new Date(a.last_updated);
+          const dateB = new Date(b.last_updated);
+        
+          // Sort in descending order (latest first)
+          return dateB - dateA;
+        });
+
+        setFiles(sortedFiles) 
       }
       else {
         //display error
@@ -134,6 +143,12 @@ const tags = Array.from({ length: 50 }).map(
     }
 
   }
+
+  useEffect(() => {
+    loadFiles()
+ 
+  }, [])
+  
 
 
 
