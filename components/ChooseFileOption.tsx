@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import useLocalStorage from "use-local-storage";
 
-export function ChooseFileOption({fileID} : {fileID: number}) {
+export function ChooseFileOption({fileID, refreshFiles} : {fileID: number, refreshFiles: () => void}) {
     const [accesstoken, setAccessToken] = useLocalStorage("access_token",''); 
 
 const handleDelete = async () => {
@@ -39,6 +39,7 @@ const handleDelete = async () => {
         //do something 
         const result = await response.json()
         console.log(result['success'])
+        refreshFiles()
       }
       else {
         //display error
