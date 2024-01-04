@@ -434,7 +434,7 @@ const Tiptap = () => {
   return (
     <div> 
 
-    <DashboardNavbar draftsBar={handleSidebar} />
+    <DashboardNavbar draftsBar={handleSidebar} draftID = {activeDraft}/>
     {error && <ErrorDialogBox 
         title="Session Expired" 
         description="Your Session has expired. Please Login"

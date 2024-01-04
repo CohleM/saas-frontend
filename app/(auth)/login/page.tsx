@@ -25,14 +25,14 @@ export default function Login() {
 
   const [email, setEmail] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
-
+  const [loading, setLoading] = useState(false)
   const handleEmailChange = (e:  ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value)
   } 
   
   const handleLogin = async () => {
       const requestBody: SubmitEmailRequest = { 'email' : email }
-
+      setLoading(true) 
       try {
         const response = await fetch('http://127.0.0.1:8000/magic-link/', {
           method: 'POST',
@@ -48,7 +48,6 @@ export default function Login() {
           setEmail('');
           // Handle successful response
           console.log(data.message);
-          alert(data.message);
 
         } else {
           // Handle errors
@@ -59,6 +58,7 @@ export default function Login() {
       catch(error) {
           console.error('An error occurred:', error);
       }
+      setLoading(false)
   }
   return (
     <div className="flex justify-center items-center mt-24">
@@ -98,7 +98,7 @@ export default function Login() {
       </CardContent>
       <CardFooter>
         <div className='flex flex-col space-y-4 w-full'> 
-        <Button className="w-full" onClick={handleLogin}>Login</Button>
+        <Button className="w-full" onClick={handleLogin}>{loading && <Icons.spinner className="h-4 w-4 animate-spin mx-2 "  />}Login</Button>
         {responseMessage && <div className='w-full bg-green-200 p-4 rounded flex space-x-2'><CheckCircle className='w-4 h-4 text-green-600'/> <div className='flex space-x-2'> </div><p className="text-green-500 text-sm">{responseMessage}</p></div>}
         </div>
         {/* {responseMessage && <p className="text-green-500">{responseMessage}</p>} */}

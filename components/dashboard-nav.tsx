@@ -60,7 +60,7 @@ const callsToAction = [
 //   return classes.filter(Boolean).join(' ')
 // }
 import { FileList } from "./FileList";
-export default function DashboardNavbar({draftsBar} : {draftsBar : () => void }) {
+export default function DashboardNavbar({draftsBar, draftID} : {draftsBar : () => void , draftID: number}) {
 
   const [isFileOpen, setIsFileOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -82,7 +82,7 @@ export default function DashboardNavbar({draftsBar} : {draftsBar : () => void })
 
 <div >
 
-  {isFileOpen && <FileList onCancel={handleCancel} /> }
+  {isFileOpen && <FileList onCancel={handleCancel} draftID={draftID}/> }
 <div className="h-14 top-0 bg-white left-0 fixed w-full z-20">
 
 <div className="flex justify-between items-center h-full px-4"> 

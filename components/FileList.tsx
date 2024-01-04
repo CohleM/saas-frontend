@@ -74,7 +74,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import FileUploader from "@/components/FileUploader"
-export function FileList({onCancel} : { onCancel : () => void}) {
+export function FileList({onCancel, draftID} : { onCancel : () => void, draftID: number}) {
   const [open, setOpen] = useState(true);
 
   const handleCancel = () => {
@@ -134,7 +134,7 @@ const tags = Array.from({ length: 50 }).map(
 
       <TabsContent value="Upload File">
           <div className="h-72"> 
-          <FileUploader />
+          <FileUploader draftID={draftID}/>
           </div>
 
       </TabsContent> 

@@ -7,16 +7,19 @@ import { useEffect, useState, useRef } from "react";
 import { Button } from "./ui/button";
 import {Loader2} from 'lucide-react';
 import { CheckCircle,XCircle } from 'lucide-react';
+import useLocalStorage from "use-local-storage";
+
 export const Icons = {
   spinner: Loader2,
 };
-export default function FileUploader() {
+export default function FileUploader({draftID} : {draftID: number}) {
 
     const [fileData, setFileData] = useState<File>();
     const [uploading, setUploading] = useState(false);
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadError, setUploadError] = useState<string | null>(null);
-    
+    const [accesstoken, setAccessToken] = useLocalStorage("access_token",''); 
+
     const imageInputRef = useRef<HTMLInputElement>(null);
 
 
@@ -30,7 +33,7 @@ export default function FileUploader() {
       }
 
       const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-
+            const token = accesstoken;
             setUploading(true)
             setUploadSuccess(false);
             setUploadError(null);
@@ -49,8 +52,12 @@ export default function FileUploader() {
 
             try { 
 
-        const response = await fetch('http://127.0.0.1:8000/upload-file', {
+        const response = await fetch(`http://127.0.0.1:8000/upload-file/?draft_id=${draftID}`, {
             method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                 // Adjust the content type as needed
+              },
             body: data
         })
 
