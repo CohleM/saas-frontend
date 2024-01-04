@@ -82,8 +82,11 @@ const Tiptap = () => {
 
   const [drafts, setDrafts] = useState<Draft[]>();
   const [loading, setLoading] = useState(false);
-
+  
   const [error, setError] = useState(false)
+  const [processing, setProcessing ] = useState(false)
+
+
 
   const {push} = useRouter();
   useEffect(() => {
@@ -120,6 +123,7 @@ const Tiptap = () => {
       ,
   onUpdate: (e) => {
     //set debounce function here. debounce meaning it should save the content every seconds. not on every change.  
+    setProcessing(true)
     debouncedUpdates(e)
   }
   })
@@ -158,6 +162,7 @@ const Tiptap = () => {
 
       // console.log(html_text)
     try {
+      
       const editDraftResponse = await fetch(`http://127.0.0.1:8000/edit-draft/${activeDraft}/`, {
       method: 'POST',
       headers: {
@@ -181,6 +186,9 @@ const Tiptap = () => {
     }
     catch (error) {
       console.error(error)
+    }
+    finally {
+      setProcessing(false)
     }
     }
 
@@ -434,7 +442,7 @@ const Tiptap = () => {
   return (
     <div> 
 
-    <DashboardNavbar draftsBar={handleSidebar} draftID = {activeDraft}/>
+    <DashboardNavbar draftsBar={handleSidebar} draftID = {activeDraft} processing={processing}/>
     {error && <ErrorDialogBox 
         title="Session Expired" 
         description="Your Session has expired. Please Login"

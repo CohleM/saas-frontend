@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
+import {CheckCircle} from 'lucide-react';
 import { Fragment, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
@@ -60,7 +60,9 @@ const callsToAction = [
 //   return classes.filter(Boolean).join(' ')
 // }
 import { FileList } from "./FileList";
-export default function DashboardNavbar({draftsBar, draftID} : {draftsBar : () => void , draftID: number}) {
+import {Icons } from "@/components/ui/circular-progress"
+
+export default function DashboardNavbar({draftsBar, draftID, processing} : {draftsBar : () => void , draftID: number, processing: boolean}) {
 
   const [isFileOpen, setIsFileOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -93,13 +95,17 @@ export default function DashboardNavbar({draftsBar, draftID} : {draftsBar : () =
     </button>
     <p className="text-lg font-bold">AI Writer</p>
     
-    <button onClick={() => {setIsFileOpen(true) }} >Files</button>
   </div>
+
+
 
   {/* Right elements */}
   <div className="flex justify-end gap-x-4 items-center mr-4">
-    <Link href="w3schools.com">Download PDF</Link>
+     {processing? ( <Icons.spinner className="h-4 w-4 animate-spin" />) : <CheckCircle className="h-4 w-4"/>}
+  <Button size="sm" variant="link" onClick={() => {setIsFileOpen(true) }} >Files</Button>
+    
     <Button size="sm" className="w-24 text-sm">Upgrade</Button>
+    <Button size="sm" variant="link">...</Button>
   </div>
 </div>
 </div>
