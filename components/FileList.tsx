@@ -74,8 +74,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import FileUploader from "@/components/FileUploader"
+import useLocalStorage from "use-local-storage";
 export function FileList({onCancel, draftID} : { onCancel : () => void, draftID: number}) {
   const [open, setOpen] = useState(true);
+  
+  const [tab, setTab] = useState("Files");
+  const [accesstoken, setAccessToken] = useLocalStorage("access_token",''); 
 
   const handleCancel = () => {
   setOpen(false);
@@ -87,6 +91,47 @@ const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 )
 
+  const onTabChange = (value: string) => {
+    
+      if(value=='Files') {
+        loadFiles()
+        console.log('heehee')
+        setTab('Files')
+      }
+      else{
+        setTab('Upload File')
+      }
+  }
+
+  const loadFiles = async () => {
+    const token = accesstoken
+
+    try {
+      const response = await fetch(`http://localhost:8000/get-files/?draft_id=${draftID}`, {
+        method : 'GET',
+        headers : {
+          Authorization : `Bearer ${token}`,
+          'Content-Type' : 'application/json'
+        }
+    }
+      ) 
+
+      if (response.ok) {
+        //do something 
+        const result = await response.json()
+        console.log(result)
+        
+      }
+      else {
+        //display error
+      }
+    }
+
+    catch(error) {
+      console.error('error', error)
+    }
+
+  }
 
 
 
@@ -106,7 +151,7 @@ const tags = Array.from({ length: 50 }).map(
 
 
 
-    <Tabs defaultValue="Files" className="w-[400px]">
+    <Tabs value={tab} onValueChange={onTabChange} className="w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="Files">Files</TabsTrigger>
         <TabsTrigger value="Upload File">Upload File</TabsTrigger>
