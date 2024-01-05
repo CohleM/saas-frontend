@@ -50,6 +50,38 @@ const handleDelete = async () => {
       console.error('error', error)
     }
 }
+
+
+
+const handleDownload = async () => {
+    const token = accesstoken
+
+    try {
+      const response = await fetch(`http://localhost:8000/download-file/?file_id=${fileID}`, {
+        method : 'GET',
+        headers : {
+          Authorization : `Bearer ${token}`,
+          'Content-Type' : 'application/json'
+        }
+    }
+      ) 
+
+      if (response.ok) {
+        console.log('deleted successfully')
+        //do something 
+        const result = await response.json()
+        console.log(result['link'])
+        refreshFiles()
+      }
+      else {
+        //display error
+      }
+    }
+
+    catch(error) {
+      console.error('error', error)
+    }
+}
   return (
     <DropdownMenu >
       <DropdownMenuTrigger asChild>
@@ -62,7 +94,7 @@ const handleDelete = async () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem >Download</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDownload}>Download</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleDelete}>
           Delete

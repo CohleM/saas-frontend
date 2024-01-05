@@ -27,6 +27,7 @@ import {Icons } from "@/components/ui/circular-progress"
 import LoadingEditor from "@/components/editor/loadingEditor"
 import { ErrorDialogBox } from "@/components/errorAlert";
 import { useRouter} from 'next/navigation';
+import { useToast } from "@/components/ui/use-toast"
 interface IResponseObject {
   role: string;
   content: string;
@@ -313,34 +314,43 @@ const Tiptap = () => {
 
 
   const createNewDraft = () => {
-    const token = accesstoken 
-    const fetchData = async () => {
-    try {
-      const draftResponse = await fetch(`http://127.0.0.1:8000/create-draft`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json', // Adjust the content type as needed
-      }})
+    
+    if (processing) {
+      // do something
 
-      if (draftResponse.ok) {
-        const draftResult = await draftResponse.json()
-        console.log('this is a new draftResult', draftResult)
-        // getAllDrafts();
-        // setActiveDraft(draftResult['id'])
-        userInfo();
-
+    }
+    else {
+      const token = accesstoken 
+      const fetchData = async () => {
+      try {
+        const draftResponse = await fetch(`http://127.0.0.1:8000/create-draft`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json', // Adjust the content type as needed
+        }})
+  
+        if (draftResponse.ok) {
+          const draftResult = await draftResponse.json()
+          console.log('this is a new draftResult', draftResult)
+          // getAllDrafts();
+          // setActiveDraft(draftResult['id'])
+          userInfo();
+  
+        }
+        else {
+          console.log('error occured while creating draft')
+        }
       }
-      else {
-        console.log('error occured while creating draft')
+      catch (error) {
+        console.error(error)
       }
-    }
-    catch (error) {
-      console.error(error)
-    }
+      }
+  
+      fetchData()  
     }
 
-    fetchData()  
+
   }
   
   
@@ -454,7 +464,7 @@ const Tiptap = () => {
     {/* <Icons.spinner className="h-4 w-4 animate-spin" /> */}
     
         {toggleSidebar && drafts && <div className="top-0 fixed left-0 w-[240px] h-screen overflow-y-auto border-r border-solid border-gray-50000"> 
-        <Drafts contentChange={handleContent} drafts={drafts} setActiveDraft={handleActiveDraft} createNewDraft = {createNewDraft} activeDraft={activeDraft}/>
+        <Drafts contentChange={handleContent} drafts={drafts} setActiveDraft={handleActiveDraft} createNewDraft = {createNewDraft} activeDraft={activeDraft}  />
 
         </div>
         }
