@@ -17,10 +17,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import useLocalStorage from "use-local-storage";
+import { useRouter} from 'next/navigation';
+
+
 
 export function ChooseFileOption({fileID, refreshFiles} : {fileID: number, refreshFiles: () => void}) {
     const [accesstoken, setAccessToken] = useLocalStorage("access_token",''); 
-
+    const { push} = useRouter();
 const handleDelete = async () => {
     const token = accesstoken
 
@@ -71,7 +74,7 @@ const handleDownload = async () => {
         //do something 
         const result = await response.json()
         console.log(result['link'])
-        refreshFiles()
+        window.open(result['link'], '_ blank');
       }
       else {
         //display error
