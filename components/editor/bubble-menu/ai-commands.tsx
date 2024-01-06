@@ -31,7 +31,7 @@ import { createPortal } from 'react-dom'
 import { Portal } from "@headlessui/react";
 import { useStreamedContent } from "@/app/context/StreamedContent";
 
-export function CheckPortal({sendMessage}) {
+export function CheckPortal({sendMessage, holdEditing} : {sendMessage: () => void, holdEditing: boolean}) {
 
   const {streamedContent, setStreamedContent} = useStreamedContent();
 
@@ -129,7 +129,7 @@ export function CheckPortal({sendMessage}) {
       </CardContent>
       <CardFooter className="justify-between space-x-2">
         {/* <Button variant="ghost" onClick={onClose}>Cancel</Button> */}
-        <Button onClick={handleSubmit} size="sm" className="w-full">Generate </Button>
+        <Button onClick={handleSubmit} size="sm" className="w-full" disabled={holdEditing}> {holdEditing && <Icons.spinner className="h-4 w-4 animate-spin mx-2" />}Generate </Button>
       </CardFooter>
       </div>
         }

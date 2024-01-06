@@ -479,7 +479,7 @@ const Tiptap = () => {
 
         </div>
 
-        <div className=" sticky top-0 w-1/2  h-screen overflow-y-auto border-l border-solid border-gray-300 p-4"> <div> <CheckPortal sendMessage={handleSendMessage}> </CheckPortal>
+        <div className=" sticky top-0 w-1/2  h-screen overflow-y-auto border-l border-solid border-gray-300 p-4"> <div> <CheckPortal sendMessage={handleSendMessage} holdEditing={holdEditing}> </CheckPortal>
 
         {/* <div dangerouslySetInnerHTML={{ __html: streamedContent }}></div> */}
         <ReactMarkdown  
