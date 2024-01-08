@@ -82,6 +82,12 @@ const Tiptap = () => {
 
   const [error, setError] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const messageEndRef = useRef<HTMLInputElement>(null);
+
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
 
   const { push } = useRouter();
   useEffect(() => {
@@ -209,8 +215,10 @@ const Tiptap = () => {
         }
         else {
             setLogMessage([])
+
             setStreamedContent(message["content"]);
             console.log(message["content"]);
+            // scrollToBottom()
             if (message["finish_reason"] == "stop") {
               setHoldEditing(false);
           }
@@ -230,6 +238,11 @@ const Tiptap = () => {
       ws.close();
     };
   }, [editor]);
+
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [logMessage]);
 
   const sendMessage = () => {
     if (socket) {
@@ -469,11 +482,15 @@ const Tiptap = () => {
               {" "}
             </CheckPortal>
             {/* <div dangerouslySetInnerHTML={{ __html: streamedContent }}></div> */}
+
+            <div ref= {messageEndRef}> 
             {logMessage.map((message, index) => (
-          <p key={index} className="text-sm text-slate-400">{message}</p>
+          <p key={index} className="text-sm text-slate-500 p-2">{message}</p>
         ))}
             {/* <p className="text-sm text-green-500 w-full">{logMessage}</p> */}
             <ReactMarkdown className="prose">{streamedContent}</ReactMarkdown>
+
+            </div>
           </div>
         </div>
       </div>
