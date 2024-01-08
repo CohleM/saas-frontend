@@ -483,13 +483,13 @@ const Tiptap = () => {
             </CheckPortal>
             {/* <div dangerouslySetInnerHTML={{ __html: streamedContent }}></div> */}
 
-            <div ref= {messageEndRef}> 
+            <div > 
             {logMessage.map((message, index) => (
           <p key={index} className="text-sm text-slate-500 p-2">{message}</p>
         ))}
             {/* <p className="text-sm text-green-500 w-full">{logMessage}</p> */}
             <ReactMarkdown className="prose">{streamedContent}</ReactMarkdown>
-
+            <div ref={messageEndRef}></div>
             </div>
           </div>
         </div>
